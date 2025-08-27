@@ -25,7 +25,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 14)]
+    #[ORM\Column(length: 20)]
     private ?string $phone = null;
 
     /**
@@ -54,16 +54,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Address $address = null;
 
     /**
+     * @var Collection<int, Notification>
+     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user')]
+    private Collection $notifications;
+
+    /**
      * @var Collection<int, Request>
      */
     #[ORM\OneToMany(targetEntity: Request::class, mappedBy: 'user')]
     private Collection $requests;
-
-    /**
-     * @var Collection<int, Document>
-     */
-    #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'user')]
-    private Collection $documents;
 
     /**
      * @var Collection<int, Discussion>
@@ -72,10 +72,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $discussions;
 
     /**
-     * @var Collection<int, Notification>
+     * @var Collection<int, Document>
      */
-    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user')]
-    private Collection $notifications;
+    #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'user')]
+    private Collection $documents;
 
     #[ORM\Column]
     private bool $isVerified = false;
@@ -83,12 +83,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __construct()
     {
-        $this->requests = new ArrayCollection();
-        $this->documents = new ArrayCollection();
-        $this->discussions = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->requests = new ArrayCollection();
+        $this->discussions = new ArrayCollection();
+        $this->documents = new ArrayCollection();
     }
-    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -134,11 +134,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->email;
     }
-    
+
     public function setEmail(string $email): static
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
@@ -153,7 +153,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-    
+
     /**
      * A visual identifier that represents this user.
      *

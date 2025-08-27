@@ -12,6 +12,12 @@ down:
 composer-install:
 	@docker compose exec php composer install
 
+db-init:
+	@docker compose exec php symfony console doctrine:migrations:migrate
+
+fixtures-load:
+	@docker compose exec php symfony console doctrine:fixtures:load
+
 cmd-php:
 	@docker compose exec php bash
 

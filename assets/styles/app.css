@@ -1,6 +1,44 @@
-@import "tailwindcss";
-@source not "../../public";
+@import 'tailwindcss';
+@import './boxicons.min.css';
+@source not '../../public';
+
+@theme {
+    --color-custom-dark-100: #313d4f;
+    --color-custom-dark-200: #323d4e;
+    --color-custom-dark-300: #273142;
+    --color-custom-dark-400: #1b2431;
+
+    --color-custom-gray-100: #979797;
+
+    --color-custom-orange-100: #ff9066;
+    --color-custom-orange-200: #ff8743;
+
+    --color-custom-blue-100: #4880ff;
+
+    --color-custom-yellow-100: #fec53d;
+
+    --color-custom-green-100: #4ad991;
+
+    --color-custom-red-100: #f93c65;
+    --color-custom-red-200: #ef3826;
+}
+
+@font-face {
+    font-family: 'Nunito-Sans';
+    src: url('../fonts/nunito-sans.ttf') format('truetype');
+}
 
 body {
-    background-color: lightgray;
+    font-family: Nunito-Sans, Arial, Helvetica, sans-serif;
+}
+
+/* Scrollbar */
+
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
 }

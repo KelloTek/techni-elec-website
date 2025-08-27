@@ -15,6 +15,9 @@ class Notification
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    private ?string $title = null;
+
+    #[ORM\Column(length: 255)]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -32,6 +35,18 @@ class Notification
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): static
+    {
+        $this->title = $title;
+
+        return $this;
     }
 
     public function getContent(): ?string

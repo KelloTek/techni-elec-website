@@ -3,7 +3,7 @@ services:
     build:
       context: ./docker-dev
       dockerfile: Dockerfile
-    container_name: techni-elec_php
+    container_name: techni-elec-website_php
     environment:
       SYMFONY_HOME: /tmp/.symfony7
     working_dir: /var/www
@@ -14,7 +14,7 @@ services:
 
   nginx:
     image: nginx
-    container_name: techni-elec_nginx
+    container_name: techni-elec-website_nginx
     ports:
       - "80:80"
       - "443:443"
@@ -27,7 +27,7 @@ services:
 
   postgres:
     image: postgres:16-alpine
-    container_name: techni-elec_postgres
+    container_name: techni-elec-website_postgres
     env_file:
       - ./.env
     ports:
@@ -43,7 +43,7 @@ services:
 
   pgadmin:
     image: dpage/pgadmin4
-    container_name: techni-elec_pgadmin
+    container_name: techni-elec-website_pgadmin
     env_file:
       - ./.env
     environment:
@@ -58,7 +58,7 @@ services:
 
   node:
     image: node:24
-    container_name: techni-elec_node
+    container_name: techni-elec-website_node
     working_dir: /var/www
     volumes:
       - ./:/var/www
@@ -66,7 +66,7 @@ services:
 
   mailpit:
     image: axllent/mailpit
-    container_name: techni-elec_mailpit
+    container_name: techni-elec-website_mailpit
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
       MP_SMTP_AUTH_ALLOW_INSECURE: 1

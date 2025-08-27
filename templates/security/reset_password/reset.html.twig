@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ 'message.form.change_password.title'|trans({}, 'forms') }}
+{% endblock %}
+
+{% block body %}
+
+    {% embed 'components/form.html.twig' with {
+        title: 'message.form.change_password.title'|trans({}, 'forms'),
+        description: 'message.form.change_password.description'|trans({}, 'forms'),
+        submit: 'message.form.change_password.submit'|trans({}, 'forms'),
+        form: resetForm,
+    } %}
+
+        {% block form %}
+            {{ form_row(form.plainPassword) }}
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

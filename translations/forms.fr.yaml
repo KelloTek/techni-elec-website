@@ -1,0 +1,58 @@
+label:
+    name: "Nom"
+    email: "Adresse e-mail"
+    phone: "Numéro de téléphone"
+    password: "Mot de passe"
+    new_password: "Nouveau mot de passe"
+    repeat_password: "Répéter le mot de passe"
+    address:
+        line: "Ligne d'adresse"
+        zip_code: "Code postal"
+        city: "Ville"
+    agree_terms: "J'accepte les conditions générales."
+
+placeholder:
+    name: "Jean Dupont ou Société XYZ"
+    email: "jean.dupont@gmail.com"
+    phone: "06 73 12 34 56"
+    password: "****************"
+    address:
+        line: "Place de Jaude"
+        zip_code: "63000"
+        city: "Clermont-Ferrand"
+
+message:
+    form:
+        agree_terms: "Voir les conditions générales"
+        register:
+            title: "Créer un compte"
+            description: "Veuillez saisir vos informations"
+            submit: "S'inscrire"
+            already_account: "Vous avez déjà un compte ?"
+            login: "Se connecter"
+        login:
+            title: "Connexion au compte"
+            description: "Veuillez saisir vos informations"
+            submit: "Se connecter"
+            remember_me: "Se souvenir de moi"
+            forgot_password: "Mot de passe oublié ?"
+            no_account: "Vous n'avez pas de compte ?"
+            register: "Créer un compte"
+        reset_password:
+            title: "Réinitialisation du mot de passe"
+            description: "Veuillez saisir votre adresse e-mail"
+            submit: "Envoyer le lien de réinitialisation"
+            back_to_login: "Retour à la connexion"
+        check_email:
+            title: "E-mail de réinitialisation du mot de passe envoyé"
+            description: "Veuillez saisir votre adresse e-mail et votre mot de passe"
+            content: "Si un compte correspondant à votre adresse e-mail existe, un e-mail contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe vient d'être envoyé."
+            resend: "Renvoyer l'e-mail"
+        change_password:
+            title: "Réinitialisation du mot de passe"
+            description: "Veuillez saisir votre nouveau mot de passe"
+            submit: "Changer le mot de passe"
+    is_true:
+        agree_terms: "Vous devez accepter nos conditions générales"
+    invalid_message:
+        password: "Les champs du mot de passe doivent correspondre."

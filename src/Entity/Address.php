@@ -17,8 +17,8 @@ class Address
     #[ORM\Column(type: Types::TEXT)]
     private ?string $line = null;
 
-    #[ORM\Column]
-    private ?int $zipCode = null;
+    #[ORM\Column(type: Types::TEXT, length: 10)]
+    private ?string $zipCode = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $city = null;
@@ -45,7 +45,7 @@ class Address
         return $this->zipCode;
     }
 
-    public function setZipCode(int $zipCode): static
+    public function setZipCode(string $zipCode): static
     {
         $this->zipCode = $zipCode;
 

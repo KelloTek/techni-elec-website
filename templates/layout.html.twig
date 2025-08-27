@@ -1,0 +1,48 @@
+{% use "form_div_layout.html.twig" %}
+
+{% block form_row %}
+  <div class="mb-2">
+    {{ form_label(form) }}
+    <div class="relative mt-2 flex items-center">
+      <i
+        class="bx {{
+        form.vars.attr['data-icon']
+        }} bg-custom-dark-400 rounded-l-xl p-3 text-2xl"
+      >
+
+      </i>
+      {{ form_widget(form) }}
+    </div>
+    {{ form_errors(form) }}
+  </div>
+{% endblock %}
+
+{% block form_widget_simple %}
+  {% set attr =
+    attr|merge({
+      class: ((attr.class|default(''))
+        ~ 'bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3')|trim
+    })
+  %}
+  {{ parent() }}
+{% endblock %}
+
+{% block checkbox_widget %}
+  {% set attr =
+    attr|merge({
+      class: ((attr.class|default(''))
+        ~ "bg-custom-dark-200 relative mr-2 cursor-pointer appearance-none rounded-lg p-3 text-xl before:absolute before:top-0 before:left-[25%] checked:before:content-['✓']")|trim
+    })
+  %}
+  {{ parent() }}
+{% endblock %}
+
+{% block form_errors %}
+  {% if (errors|length) > 0 %}
+    <p class="bg-custom-red-100 mt-3 flex rounded-xl p-3">
+      {% for error in errors %}
+        {{ error.getMessage()|trans({}, 'validators', translation_domain) }}
+      {% endfor %}
+    </p>
+  {% endif %}
+{% endblock %}

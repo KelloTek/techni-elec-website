@@ -17,8 +17,8 @@ class Expertise
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $image = null;
+    #[ORM\ManyToOne(inversedBy: 'expertises')]
+    private ?File $image = null;
 
     public function getId(): ?int
     {
@@ -37,12 +37,12 @@ class Expertise
         return $this;
     }
 
-    public function getImage(): ?string
+    public function getImage(): ?File
     {
         return $this->image;
     }
 
-    public function setImage(string $image): static
+    public function setImage(?File $image): static
     {
         $this->image = $image;
 

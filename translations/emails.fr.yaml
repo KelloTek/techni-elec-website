@@ -1,0 +1,10 @@
+configuration.no_reply.sender_name: "Ne pas répondre"
+registration.confirmation_email.subject: "Confirmez l'adresse e-mail de votre compte"
+
+email:
+    reset_password:
+        subject: "Demande de réinitialisation du mot de passe"
+        title: "Réinitialisation du mot de passe"
+        description: "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant"
+        content: "Ce lien expirera dans %time%."
+        link: "Réinitialiser le mot de passe"

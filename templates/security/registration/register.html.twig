@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'message.form.register.title'|trans({}, 'forms') }}
+{% endblock %}
+
+{% block body %}
+  {% embed 'components/form.html.twig'
+    with {
+      title: 'message.form.register.title'|trans({}, 'forms'),
+      description: 'message.form.register.description'|trans({}, 'forms'),
+      submit: 'message.form.register.submit'|trans({}, 'forms'),
+      form: registrationForm
+    }
+  %}
+    {% block beforeForm %}
+      {% for flash_error in app.flashes('verify_email_error') %}
+        <div
+          class="bg-custom-red-100 mb-12 rounded-xl p-5 text-center font-semibold"
+          role="alert"
+        >
+          {{ flash_error }}
+        </div>
+      {% endfor %}
+    {% endblock %}
+    {% block form %}
+      {{ form_row(form.name) }}
+
+      <div class="grid gap-4 sm:grid-cols-2">
+        {{ form_row(form.email) }}
+
+        {{ form_row(form.phone) }}
+      </div>
+
+      {{ form_row(form.plainPassword) }}
+
+      <div class="grid gap-4" data-form-address="data-form-address">
+        {{ form_row(form.address.line) }}
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          {{ form_row(form.address.zipCode) }}
+
+          {{ form_row(form.address.city) }}
+        </div>
+      </div>
+
+      <div class="mb-2 flex items-center">
+        {{ form_widget(form.agreeTerms) }}
+        {{ form_label(form.agreeTerms) }}
+        <a href="{{ path('app_user_home') }}"
+          class="text-custom-orange-200 hover:text-custom-orange-100 ml-1 underline">
+            {{ 'message.form.agree_terms'|trans({}, 'forms') }}
+        </a>
+      </div>
+        {{ form_row(form.recaptcha) }}
+    {% endblock %}
+    {% block afterForm %}
+      <p class="text-center">
+        {{ 'message.form.register.already_account'|trans({}, 'forms') }}
+          <a href="{{ path('app_login') }}" class="text-custom-orange-200 hover:text-custom-orange-100 underline">
+              {{ 'message.form.register.login'|trans({}, 'forms') }}
+          </a>
+      </p>
+    {% endblock %}
+  {% endembed %}
+{% endblock %}

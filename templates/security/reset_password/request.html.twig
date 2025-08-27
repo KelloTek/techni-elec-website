@@ -1,0 +1,36 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+    {{ 'message.form.reset_password.title'|trans({}, 'forms') }}
+{% endblock %}
+
+{% block body %}
+
+    {% embed 'components/form.html.twig' with {
+        title: 'message.form.reset_password.title'|trans({}, 'forms'),
+        description: 'message.form.reset_password.description'|trans({}, 'forms'),
+        submit: 'message.form.reset_password.submit'|trans({}, 'forms'),
+        form: requestForm,
+    } %}
+
+        {% block beforeForm %}
+            {% for flash_error in app.flashes('reset_password_error') %}
+                <div class="text-center mb-12 p-5 max-w-[50vw] font-semibold bg-custom-red-100 rounded-xl" role="alert">{{ flash_error }}</div>
+            {% endfor %}
+        {% endblock %}
+
+        {% block form %}
+            {{ form_row(form.email) }}
+        {% endblock %}
+
+        {% block afterForm %}
+            <p class="text-center">
+                <a href="{{ path('app_login') }}" class="hover:text-custom-orange-100">
+                    {{ 'message.form.reset_password.back_to_login'|trans({}, 'forms') }}
+                </a>
+            </p>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

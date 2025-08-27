@@ -1,5 +1,8 @@
 twig:
+    globals:
+        recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
     file_name_pattern: '*.twig'
+    form_themes: ['layout.html.twig']
 
 when@test:
     twig:

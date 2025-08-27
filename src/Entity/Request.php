@@ -38,22 +38,22 @@ class Request
     private Collection $discussions;
 
     /**
+     * @var Collection<int, File>
+     */
+    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'requests')]
+    private Collection $file;
+
+    /**
      * @var Collection<int, Document>
      */
     #[ORM\OneToMany(targetEntity: Document::class, mappedBy: 'request')]
     private Collection $documents;
 
-    /**
-     * @var Collection<int, Media>
-     */
-    #[ORM\ManyToMany(targetEntity: Media::class, mappedBy: 'requests')]
-    private Collection $media;
-
     public function __construct()
     {
         $this->discussions = new ArrayCollection();
+        $this->file = new ArrayCollection();
         $this->documents = new ArrayCollection();
-        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,11 +90,9 @@ class Request
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    public function setCreatedAt(): void
     {
-        $this->createdAt = $createdAt;
-
-        return $this;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getCategory(): ?RequestCategory
@@ -152,6 +150,33 @@ class Request
     }
 
     /**
+     * @return Collection<int, File>
+     */
+    public function getFile(): Collection
+    {
+        return $this->file;
+    }
+
+    public function addFile(File $file): static
+    {
+        if (!$this->file->contains($file)) {
+            $this->file->add($file);
+            $file->addRequest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFile(File $file): static
+    {
+        if ($this->file->removeElement($file)) {
+            $file->removeRequest($this);
+        }
+
+        return $this;
+    }
+
+    /**
      * @return Collection<int, Document>
      */
     public function getDocuments(): Collection
@@ -176,33 +201,6 @@ class Request
             if ($document->getRequest() === $this) {
                 $document->setRequest(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Media>
-     */
-    public function getMedia(): Collection
-    {
-        return $this->media;
-    }
-
-    public function addMedium(Media $medium): static
-    {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->addRequest($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMedium(Media $medium): static
-    {
-        if ($this->media->removeElement($medium)) {
-            $medium->removeRequest($this);
         }
 
         return $this;

@@ -1,12 +1,19 @@
+###> jetbrains/ides ###
 /.idea
+###< jetbrains/ides ###
+
+###> docker ###
 /docker-dev/certs
+###< docker ###
 
 ###> symfony/framework-bundle ###
 /.env.local
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
+/private
 /public/bundles/
+/public/uploads/
 /var/
 /vendor/
 /assets/vendor/

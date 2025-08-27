@@ -23,14 +23,14 @@ class Realization
     private ?string $content = null;
 
     /**
-     * @var Collection<int, Media>
+     * @var Collection<int, File>
      */
-    #[ORM\ManyToMany(targetEntity: Media::class, mappedBy: 'realizations')]
-    private Collection $media;
+    #[ORM\ManyToMany(targetEntity: File::class, mappedBy: 'realizations')]
+    private Collection $image;
 
     public function __construct()
     {
-        $this->media = new ArrayCollection();
+        $this->image = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -63,27 +63,27 @@ class Realization
     }
 
     /**
-     * @return Collection<int, Media>
+     * @return Collection<int, File>
      */
-    public function getMedia(): Collection
+    public function getImage(): Collection
     {
-        return $this->media;
+        return $this->image;
     }
 
-    public function addMedium(Media $medium): static
+    public function addImage(File $image): static
     {
-        if (!$this->media->contains($medium)) {
-            $this->media->add($medium);
-            $medium->addRealization($this);
+        if (!$this->image->contains($image)) {
+            $this->image->add($image);
+            $image->addRealization($this);
         }
 
         return $this;
     }
 
-    public function removeMedium(Media $medium): static
+    public function removeImage(File $image): static
     {
-        if ($this->media->removeElement($medium)) {
-            $medium->removeRealization($this);
+        if ($this->image->removeElement($image)) {
+            $image->removeRealization($this);
         }
 
         return $this;

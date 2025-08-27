@@ -18,10 +18,10 @@ class Certification
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $image = null;
-
-    #[ORM\Column(type: Types::TEXT)]
     private ?string $link = null;
+
+    #[ORM\ManyToOne(inversedBy: 'certifications')]
+    private ?File $image = null;
 
     public function getId(): ?int
     {
@@ -40,18 +40,6 @@ class Certification
         return $this;
     }
 
-    public function getImage(): ?string
-    {
-        return $this->image;
-    }
-
-    public function setImage(string $image): static
-    {
-        $this->image = $image;
-
-        return $this;
-    }
-
     public function getLink(): ?string
     {
         return $this->link;
@@ -60,6 +48,18 @@ class Certification
     public function setLink(string $link): static
     {
         $this->link = $link;
+
+        return $this;
+    }
+
+    public function getImage(): ?File
+    {
+        return $this->image;
+    }
+
+    public function setImage(?File $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

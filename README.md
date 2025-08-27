@@ -26,18 +26,24 @@
    ```bash
    make composer-install
    ```
+   
+6. Initialize the database:
+   ```bash
+   make db-init
+   ```
 
-6. Install the dependencies:
+7. Install the dependencies:
    ```bash
    make yarn-install
    ```
 
-7. Start the development server:
+8. Start the development server:
    ```bash
    make yarn-watch
    ```
 
-8. Open your browser and go to `http://localhost` or `https://localhost` to view the website.
-9. You can configure the project with `compose.yaml`, `.env` file and `docker-dev` folder.
-10. You can use `make cmd-php` or `make cmd-node` to run commands in the php or node container respectively.
-11. You can use `make down` to stop the containers.
+9. Open your browser and go to `http://localhost` or `https://localhost` to view the website.
+10. You can configure the project with `compose.yaml`, `.env` file and `docker-dev` folder.
+11. You can use `make cmd-php` or `make cmd-node` to run commands in the php or node container respectively.
+12. If you need fixtures, you can use `make fixtures-load` to load them into the database.
+13. You can use `make down` to stop the containers.

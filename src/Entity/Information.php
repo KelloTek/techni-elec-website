@@ -7,7 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: InformationRepository::class)]
-#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_LABEL', fields: ['label'])]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_KEY', fields: ['key'])]
 class Information
 {
     #[ORM\Id]
@@ -16,7 +16,7 @@ class Information
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $label = null;
+    private ?string $key = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $value = null;
@@ -26,14 +26,14 @@ class Information
         return $this->id;
     }
 
-    public function getLabel(): ?string
+    public function getKey(): ?string
     {
-        return $this->label;
+        return $this->key;
     }
 
-    public function setLabel(string $label): static
+    public function setKey(string $key): static
     {
-        $this->label = $label;
+        $this->key = $key;
 
         return $this;
     }
