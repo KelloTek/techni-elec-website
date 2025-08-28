@@ -1,4 +1,4 @@
-FROM php:8.2-fpm AS php
+FROM php:8.3-fpm AS php
 
 # Install needed packages
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -36,5 +36,3 @@ RUN addgroup --gid 1000 devgroup && \
 # Switch to devuser
 USER devuser
 WORKDIR /var/www
-
-CMD ["php-fpm"]

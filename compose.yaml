@@ -11,6 +11,8 @@ services:
       - ./:/var/www
     depends_on:
       - postgres
+      - mailpit
+    command: php-fpm
 
   nginx:
     image: nginx
@@ -67,12 +69,23 @@ services:
   mailpit:
     image: axllent/mailpit
     container_name: techni-elec-website_mailpit
-    environment:
-      MP_SMTP_AUTH_ACCEPT_ANY: 1
-      MP_SMTP_AUTH_ALLOW_INSECURE: 1
     ports:
       - "1025:1025"
       - "8025:8025"
+
+  messenger:
+    build:
+      context: ./docker-dev
+      dockerfile: Dockerfile
+    container_name: techni-elec-website_messenger
+    environment:
+      SYMFONY_HOME: /tmp/.symfony7
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    depends_on:
+      - php
+    command: php bin/console messenger:consume async -vv
 
 volumes:
   postgres: {}

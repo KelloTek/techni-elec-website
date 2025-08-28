@@ -1,0 +1,51 @@
+<mjml>
+    <mj-head>
+        <mj-attributes>
+            <mj-all font-family="Arial, sans-serif" color="#ffffff" />
+            <mj-text font-size="16px" />
+            <mj-button border-radius="8px" font-size="16px" />
+        </mj-attributes>
+    </mj-head>
+    <mj-body>
+        <mj-section full-width="full-width" background-color="#ff8743" padding="40px 0">
+            <mj-column width="600px" background-color="#273142" border-radius="16px" padding="20px 1px">
+
+                <!-- Title -->
+                <mj-text align="center" font-size="24px" font-weight="bold" padding-bottom="12px">
+                    {{ 'email.reset_password.title'|trans({}, 'emails') }}
+                </mj-text>
+
+                <!-- Description -->
+                <mj-text align="center" font-size="16px" padding-bottom="24px">
+                    {{ 'email.reset_password.description'|trans({}, 'emails') }}
+                </mj-text>
+
+                <!-- Content -->
+                <mj-wrapper background-color="#374151" border-radius="12px" padding="0 20px">
+                    <mj-section>
+                        <mj-column>
+                            <mj-text align="center" font-weight="600">
+                                {{ 'email.reset_password.content'|trans({'%time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}, 'emails') }}
+                            </mj-text>
+                            <mj-text align="center" font-weight="600" color="#ff8743" text-decoration="underline">
+                                {{ url('app_reset_password', {token: resetToken.token}) }}
+                            </mj-text>
+                        </mj-column>
+                    </mj-section>
+                </mj-wrapper>
+
+                <!-- Button -->
+                <mj-wrapper padding-top="10px">
+                    <mj-section>
+                        <mj-column>
+                            <mj-button href="{{ url('app_reset_password', {token: resetToken.token}) }}" background-color="#F97316" font-weight="bold" font-size="18px">
+                                {{ 'email.reset_password.link'|trans({}, 'emails') }}
+                            </mj-button>
+                        </mj-column>
+                    </mj-section>
+                </mj-wrapper>
+
+            </mj-column>
+        </mj-section>
+    </mj-body>
+</mjml>

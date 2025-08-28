@@ -5,6 +5,6 @@ email:
     reset_password:
         subject: "Demande de réinitialisation du mot de passe"
         title: "Réinitialisation du mot de passe"
-        description: "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant"
+        description: "Pour réinitialiser votre mot de passe, veuillez cliquer sur le lien suivant ou sur le bouton ci-dessous"
         content: "Ce lien expirera dans %time%."
         link: "Réinitialiser le mot de passe"
