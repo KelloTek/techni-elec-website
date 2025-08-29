@@ -5,7 +5,6 @@
 {% endblock %}
 
 {% block body %}
-
     {% embed 'components/form.html.twig' with {
         title: 'message.form.reset_password.title'|trans({}, 'forms'),
         description: 'message.form.reset_password.description'|trans({}, 'forms'),
@@ -15,7 +14,9 @@
 
         {% block beforeForm %}
             {% for flash_error in app.flashes('reset_password_error') %}
-                <div class="text-center mb-12 p-5 max-w-[50vw] font-semibold bg-custom-red-100 rounded-xl" role="alert">{{ flash_error }}</div>
+                <div class="text-center mb-12 p-5 max-w-[50vw] font-semibold bg-custom-red-100 rounded-xl" role="alert">
+                    {{ flash_error }}
+                </div>
             {% endfor %}
         {% endblock %}
 
@@ -30,7 +31,5 @@
                 </a>
             </p>
         {% endblock %}
-
     {% endembed %}
-
 {% endblock %}

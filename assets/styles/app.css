@@ -42,3 +42,27 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
     display: none;
 }
+
+/* Form Result Address */
+
+.form-result-address-container {
+    position: absolute;
+    top: 3.2rem;
+    width: 100% !important;
+    max-height: 10.7rem;
+    background-color: var(--color-custom-dark-200);
+    border-radius: 0.75rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 99;
+}
+
+.form-result-address-item {
+    padding: 1rem;
+    cursor: pointer;
+    border-bottom: 0.15rem solid var(--color-custom-dark-300);
+}
+
+.form-result-address-item:hover {
+    background-color: var(--color-custom-dark-400);
+}

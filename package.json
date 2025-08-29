@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@tailwindcss/postcss": "^4.1.12",
+        "air-datepicker": "^3.6.0",
         "file-loader": "^6.0.0",
         "mjml": "^4.15.3",
         "postcss": "^8.5.6",

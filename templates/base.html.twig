@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %} | Techni-Elec</title>
+        <title>{% block title %}{% endblock %} | {{ site_name }}</title>
         <link rel='icon' href='{{ asset('build/images/favicon.svg') }}' type='image/svg+xml'>
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}

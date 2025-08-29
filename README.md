@@ -37,13 +37,18 @@
    make yarn-install
    ```
 
-8. Start the development server:
+8. Restart the containers:
+   ```bash
+   make restart
+   ```
+
+9. Start the development server:
    ```bash
    make yarn-watch
    ```
 
-9. Open your browser and go to `http://localhost` or `https://localhost` to view the website.
-10. You can configure the project with `compose.yaml`, `.env` file and `docker-dev` folder.
-11. You can use `make cmd-php` or `make cmd-node` to run commands in the php or node container respectively.
-12. If you need fixtures, you can use `make fixtures-load` to load them into the database.
-13. You can use `make down` to stop the containers.
+10. Open your browser and go to `http://localhost` or `https://localhost` to view the website.
+11. You can configure the project with `compose.yaml`, `.env` file and `docker-dev` folder.
+12. You can use `make cmd-php` or `make cmd-node` to run commands in the php or node container respectively.
+13. If you need fixtures, you can use `make fixtures-load` to load them into the database.
+14. You can use `make down` to stop the containers.

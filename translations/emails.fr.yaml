@@ -1,7 +1,13 @@
-configuration.no_reply.sender_name: "Ne pas répondre"
-registration.confirmation_email.subject: "Confirmez l'adresse e-mail de votre compte"
+config.sender_name: "Ne pas répondre"
 
 email:
+    registration:
+        confirmation_email:
+            subject: "Confirmez l'adresse e-mail de votre compte"
+            title: "Confirmation de l'adresse e-mail"
+            description: "Pour finaliser votre inscription, veuillez cliquer sur le lien suivant ou sur le bouton ci-dessous"
+            content: "Ce lien expirera dans %time%."
+            link: "Confirmer l'adresse e-mail"
     reset_password:
         subject: "Demande de réinitialisation du mot de passe"
         title: "Réinitialisation du mot de passe"

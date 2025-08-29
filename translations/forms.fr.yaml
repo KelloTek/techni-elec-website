@@ -10,9 +10,10 @@ label:
         zip_code: "Code postal"
         city: "Ville"
     agree_terms: "J'accepte les conditions générales."
+    honeypot: "Pays"
 
 placeholder:
-    name: "Jean Dupont ou Société XYZ"
+    name: "Jean DUPONT ou Société XYZ"
     email: "jean.dupont@gmail.com"
     phone: "06 73 12 34 56"
     password: "****************"
@@ -20,6 +21,7 @@ placeholder:
         line: "Place de Jaude"
         zip_code: "63000"
         city: "Clermont-Ferrand"
+    honeypot: "France"
 
 message:
     form:
@@ -52,6 +54,21 @@ message:
             title: "Réinitialisation du mot de passe"
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
+    not_blank:
+        name: "Le nom ne peut pas être vide."
+        email: "L'adresse e-mail ne peut pas être vide."
+        phone: "Le numéro de téléphone ne peut pas être vide."
+        password: "Le mot de passe ne peut pas être vide."
+        address:
+            line: "La ligne d'adresse ne peut pas être vide."
+            zip_code: "Le code postal ne peut pas être vide."
+            city: "La ville ne peut pas être vide."
+    length:
+        min:
+            phone: "Le numéro de téléphone doit comporter au moins %limit% caractères."
+            password: "Le mot de passe doit comporter au moins %limit% caractères."
+        max:
+            phone: "Le numéro de téléphone ne peut pas dépasser %limit% caractères."
     is_true:
         agree_terms: "Vous devez accepter nos conditions générales"
     invalid_message:

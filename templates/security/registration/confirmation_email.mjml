@@ -12,12 +12,12 @@
 
                 <!-- Title -->
                 <mj-text align="center" font-size="24px" font-weight="bold" padding-bottom="12px">
-                    {{ 'email.reset_password.title'|trans({}, 'emails') }}
+                    {{ 'email.registration.confirmation_email.title'|trans({}, 'emails') }}
                 </mj-text>
 
                 <!-- Description -->
                 <mj-text align="center" font-size="16px" padding-bottom="24px">
-                    {{ 'email.reset_password.description'|trans({}, 'emails') }}
+                    {{ 'email.registration.confirmation_email.description'|trans({}, 'emails') }}
                 </mj-text>
 
                 <!-- Content -->
@@ -25,10 +25,10 @@
                     <mj-section>
                         <mj-column>
                             <mj-text align="center" font-weight="600">
-                                {{ 'email.reset_password.content'|trans({'%time%': resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle')}, 'emails') }}
+                                {{ 'email.registration.confirmation_email.content'|trans({'%time%': expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }, 'emails') }}
                             </mj-text>
-                            <mj-button href="{{ url('app_reset_password', {token: resetToken.token}) }}" align="center" font-weight="600" color="#ff8743" background-color="#374151" text-decoration="underline">
-                                {{ url('app_reset_password', {token: resetToken.token}) }}
+                            <mj-button href="{{ signedUrl|raw }}" align="center" font-weight="600" color="#ff8743" background-color="#374151" text-decoration="underline">
+                                {{ signedUrl|raw }}
                             </mj-button>
                         </mj-column>
                     </mj-section>
@@ -38,8 +38,8 @@
                 <mj-wrapper padding-top="10px">
                     <mj-section>
                         <mj-column>
-                            <mj-button href="{{ url('app_reset_password', {token: resetToken.token}) }}" background-color="#F97316" font-weight="bold" font-size="18px">
-                                {{ 'email.reset_password.link'|trans({}, 'emails') }}
+                            <mj-button href="{{ signedUrl|raw }}" background-color="#F97316" font-weight="bold" font-size="18px">
+                                {{ 'email.registration.confirmation_email.link'|trans({}, 'emails') }}
                             </mj-button>
                         </mj-column>
                     </mj-section>

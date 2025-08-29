@@ -5,105 +5,64 @@
 {% endblock %}
 
 {% block body %}
-  <div
-    class="flex h-screen w-screen items-center justify-center bg-cover bg-center bg-no-repeat"
-    style="background-image: url({{ asset('build/images/background.svg') }});"
-  >
-    <div
-      class="bg-custom-dark-300 scrollbar-hide grid max-h-[90vh] lg:max-w-[60vw] overflow-scroll rounded-xl p-12 text-white"
-    >
-      <div class="text-center">
-        <h1 class="text-3xl font-bold">{{ 'message.form.login.title'|trans({}, 'forms') }}</h1>
-        <p class="mt-3 mb-12">{{ 'message.form.login.description'|trans({}, 'forms') }}</p>
-      </div>
+    <div class="flex h-screen w-screen items-center justify-center bg-cover bg-center bg-no-repeat" style="background-image: url({{ asset('build/images/background.svg') }});">
+        <div class="bg-custom-dark-300 scrollbar-hide grid max-h-[90vh] lg:max-w-[60vw] overflow-scroll rounded-xl p-12 text-white">
+            <div class="text-center">
+                <h1 class="text-3xl font-bold">{{ 'message.form.login.title'|trans({}, 'forms') }}</h1>
+                <p class="mt-3 mb-12">{{ 'message.form.login.description'|trans({}, 'forms') }}</p>
+            </div>
 
-      <form method="post" class="grid gap-4" name="login_form">
-        {% if error %}
-          <div
-            class="bg-custom-red-100 mb-3 rounded-xl p-5 text-center font-semibold"
-          >
-            {{ error.messageKey|trans(error.messageData, 'security') }}
-          </div>
-        {% endif %}
+            <form method="post" class="grid gap-4" name="login_form">
+                {% if error %}
+                    <div class="bg-custom-red-100 mb-3 rounded-xl p-5 text-center font-semibold">
+                        {{ error.messageKey|trans(error.messageData, 'security') }}
+                    </div>
+                {% endif %}
 
-        <div class="mb-2">
-          <label for="username">{{ 'label.email'|trans({}, 'forms') }}</label>
-          <div class="mt-2 flex items-center">
-            <i class="bx bxs-user bg-custom-dark-400 rounded-l-xl p-3 text-2xl">
+                <div class="mb-2">
+                    <label for="username">{{ 'label.email'|trans({}, 'forms') }}</label>
+                    <div class="mt-2 flex items-center">
+                        <i class="bx bxs-user bg-custom-dark-400 rounded-l-xl p-3 text-2xl"></i>
+                        <input type="email" value="{{ last_username }}" name="_username" id="username" autocomplete="email" placeholder="{{ 'placeholder.email'|trans({}, 'forms') }}" required autofocus
+                               class="bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3"/>
+                    </div>
+                </div>
 
-            </i>
-            <input
-              type="email"
-              value="{{ last_username }}"
-              name="_username"
-              id="username"
-              class="bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3"
-              autocomplete="email"
-              placeholder="{{ 'placeholder.email'|trans({}, 'forms') }}"
-              required
-              autofocus
-            />
-          </div>
+                <div class="mb-2">
+                    <div class="flex justify-between">
+                        <label for="password">{{ 'label.password'|trans({}, 'forms') }}</label>
+                        <a href="{{ path('app_forgot_password_request') }}" class="text-custom-gray-100 hover:text-custom-orange-100 hover:underline transition">
+                            {{ 'message.form.login.forgot_password'|trans({}, 'forms') }}
+                        </a>
+                    </div>
+                    <div class="mt-2 flex items-center">
+                        <i class="bx bxs-key bg-custom-dark-400 rounded-l-xl p-3 text-2xl"></i>
+                        <input type="password" name="_password" id="password" autocomplete="current-password" placeholder="{{ 'placeholder.password'|trans({}, 'forms') }}" required
+                               class="bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3"/>
+                    </div>
+                </div>
+
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+
+                <div class="mb-2 flex items-center">
+                    <input type="checkbox" name="_remember_me" id="_remember_me"
+                           class="bg-custom-dark-200 relative mr-2 cursor-pointer appearance-none rounded-lg p-3 text-xl before:absolute before:top-[-1%] before:left-[25%] checked:before:content-['✓']"/>
+                    <label for="_remember_me">{{ 'message.form.login.remember_me'|trans({}, 'forms') }}</label>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-custom-orange-200 hover:bg-custom-orange-100 my-5 w-[80%] cursor-pointer rounded-xl p-3 text-xl transition">
+                        {{ 'message.form.login.submit'|trans({}, 'forms') }}
+                    </button>
+                </div>
+            </form>
+
+            <p class="text-center">
+                {{ 'message.form.login.no_account'|trans({}, 'forms') }}
+                <a href="{{ path('app_register') }}" class="text-custom-orange-200 hover:text-custom-orange-100 underline">
+                    {{ 'message.form.login.register'|trans({}, 'forms') }}
+                </a>
+            </p>
         </div>
-
-        <div class="mb-2">
-          <div class="flex justify-between">
-            <label for="password">{{ 'label.password'|trans({}, 'forms') }}</label>
-            <a
-              href="{{ path('app_forgot_password_request') }}"
-              class="text-custom-gray-100 hover:text-custom-orange-100 hover:underline transition"
-            >
-              {{ 'message.form.login.forgot_password'|trans({}, 'forms') }}
-            </a>
-          </div>
-          <div class="mt-2 flex items-center">
-            <i class="bx bxs-key bg-custom-dark-400 rounded-l-xl p-3 text-2xl">
-
-            </i>
-            <input
-              type="password"
-              name="_password"
-              id="password"
-              class="bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3"
-              autocomplete="current-password"
-              placeholder="{{ 'placeholder.password'|trans({}, 'forms') }}"
-              required
-            />
-          </div>
-        </div>
-
-        <input
-          type="hidden"
-          name="_csrf_token"
-          value="{{ csrf_token('authenticate') }}"
-        />
-
-        <div class="mb-2 flex items-center">
-          <input
-            type="checkbox"
-            name="_remember_me"
-            id="_remember_me"
-            class="bg-custom-dark-200 relative mr-2 cursor-pointer appearance-none rounded-lg p-3 text-xl before:absolute before:top-[-1%] before:left-[25%] checked:before:content-['✓']"
-          />
-          <label for="_remember_me">{{ 'message.form.login.remember_me'|trans({}, 'forms') }}</label>
-        </div>
-
-        <div class="flex justify-center">
-          <button
-            type="submit"
-            class="bg-custom-orange-200 hover:bg-custom-orange-100 my-5 w-[80%] cursor-pointer rounded-xl p-3 text-xl transition"
-          >
-              {{ 'message.form.login.submit'|trans({}, 'forms') }}
-          </button>
-        </div>
-      </form>
-
-      <p class="text-center">
-        {{ 'message.form.login.no_account'|trans({}, 'forms') }}
-          <a href="{{ path('app_register') }}" class="text-custom-orange-200 hover:text-custom-orange-100 underline">
-            {{ 'message.form.login.register'|trans({}, 'forms') }}
-          </a>
-      </p>
     </div>
-  </div>
 {% endblock %}

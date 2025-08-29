@@ -15,8 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
-
-class RegistrationController extends AbstractController
+ class RegistrationController extends AbstractController
 {
     public function __construct(private EmailVerifier $emailVerifier)
     {
@@ -25,11 +24,15 @@ class RegistrationController extends AbstractController
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, TranslatorInterface $translator): Response
     {
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_user_home');
+        }
+
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid() && $form->get('honeypot')->isEmpty()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
@@ -42,9 +45,9 @@ class RegistrationController extends AbstractController
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address($_ENV['MAIL_NO_REPLY'], $translator->trans('configuration.no_reply.sender_name')))
+                    ->from(new Address($_ENV['MAILER_ADDRESS_EMAIL'], $translator->trans('config.sender_name', [], 'emails') . ' - Techni-Elec'))
                     ->to((string) $user->getEmail())
-                    ->subject($translator->trans('registration.confirmation_email.subject'))
+                    ->subject($translator->trans('email.registration_confirmation.subject', [], 'emails'))
                     ->htmlTemplate('security/registration/confirmation_email.html.twig')
             );
 

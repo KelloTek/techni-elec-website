@@ -9,9 +9,12 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AddressType extends AbstractType
 {
+    public function __construct(private TranslatorInterface $translator) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -22,10 +25,11 @@ class AddressType extends AbstractType
                     'data-address-line-input' => true,
                     'data-icon' => 'bxs-directions',
                     'placeholder' => 'placeholder.address.line',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.address.line',
+                        'message' => $this->translator->trans('message.not_blank.address.line', [], 'forms'),
                     ]),
                 ],
             ])
@@ -36,10 +40,11 @@ class AddressType extends AbstractType
                     'data-address-zip-code-input' => true,
                     'data-icon' => 'bx-hashtag',
                     'placeholder' => 'placeholder.address.zip_code',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.address.zip_code',
+                        'message' => $this->translator->trans('message.not_blank.address.zip_code', [], 'forms'),
                     ]),
                 ],
             ])
@@ -50,10 +55,11 @@ class AddressType extends AbstractType
                     'data-address-city-input' => true,
                     'data-icon' => 'bxs-city',
                     'placeholder' => 'placeholder.address.city',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.address.city',
+                        'message' => $this->translator->trans('message.not_blank.address.city', [], 'forms'),
                     ]),
                 ],
             ])

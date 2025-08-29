@@ -3,8 +3,8 @@
 namespace App\Form;
 
 use App\Entity\User;
-use EWZ\Bundle\RecaptchaBundle\Form\Type\EWZRecaptchaV3Type;
-use EWZ\Bundle\RecaptchaBundle\Validator\Constraints\IsTrueV3;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -18,9 +18,12 @@ use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\NotCompromisedPassword;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegistrationFormType extends AbstractType
 {
+    public function __construct(private TranslatorInterface $translator) {}
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -30,10 +33,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'data-icon' => 'bxs-user',
                     'placeholder' => 'placeholder.name',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.name',
+                        'message' => $this->translator->trans('message.not_blank.name', [], 'forms'),
                     ]),
                 ],
             ])
@@ -43,10 +47,11 @@ class RegistrationFormType extends AbstractType
                 'attr' => [
                     'data-icon' => 'bxs-envelope',
                     'placeholder' => 'placeholder.email',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.email',
+                        'message' => $this->translator->trans('message.not_blank.email', [], 'forms'),
                     ]),
                 ],
             ])
@@ -57,16 +62,17 @@ class RegistrationFormType extends AbstractType
                     'data-phone-input' => true,
                     'data-icon' => 'bxs-phone',
                     'placeholder' => 'placeholder.phone',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'message.not_blank.phone',
+                        'message' => $this->translator->trans('message.not_blank.phone', [], 'forms'),
                     ]),
                     new Length([
                         'min' => 10,
                         'max' => 14,
-                        'minMessage' => 'message.length.min_message.phone',
-                        'maxMessage' => 'message.length.max_message.phone',
+                        'minMessage' => $this->translator->trans('message.length.min.phone', ['%limit%' => '{{ limit }}'], 'forms'),
+                        'maxMessage' => $this->translator->trans('message.length.max.phone', ['%limit%' => '{{ limit }}'], 'forms'),
                     ]),
                 ],
             ])
@@ -80,11 +86,15 @@ class RegistrationFormType extends AbstractType
                     'autocomplete' => 'new-password',
                     'placeholder' => 'placeholder.password',
                     'data-icon' => 'bxs-key',
+                    'data-sr-only' => false,
                 ],
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank([
+                        'message' => $this->translator->trans('message.not_blank.password', [], 'forms'),
+                    ]),
                     new Length([
-                        'min' => 6,
+                        'min' => 16,
+                        'minMessage' => $this->translator->trans('message.length.min.password', ['%limit%' => '{{ limit }}'], 'forms'),
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
@@ -101,16 +111,30 @@ class RegistrationFormType extends AbstractType
                 'label' => 'label.agree_terms',
                 'constraints' => [
                     new IsTrue([
-                        'message' => 'message.is_true.agree_terms',
+                        'message' => $this->translator->trans('message.is_true.agree_terms', [], 'forms'),
                     ]),
                 ],
             ])
-            ->add('recaptcha', EWZRecaptchaV3Type::class, [
+            ->add('captcha', Recaptcha3Type::class, [
+                'required' => true,
+                'constraints' => new Recaptcha3(),
                 'action_name' => 'register',
-                'constraints' => [
-                    new IsTrueV3()
-                ]
-            ]) ;
+                'locale' => 'fr',
+            ])
+            ->add('country', TextType::class, [
+                'required' => false,
+                'mapped' => false,
+                'label' => 'label.honeypot',
+                'attr' => [
+                    'autocomplete' => 'off',
+                    'tabindex' => '-1',
+                    'aria-hidden' => 'true',
+                    'data-icon' => 'bxs-honey',
+                    'placeholder' => 'placeholder.honeypot',
+                    'data-sr-only' => true,
+                ],
+            ])
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
