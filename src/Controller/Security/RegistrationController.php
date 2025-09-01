@@ -32,7 +32,7 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $form->get('honeypot')->isEmpty()) {
+        if ($form->isSubmitted() && $form->isValid() && $form->get('country')->isEmpty()) {
             /** @var string $plainPassword */
             $plainPassword = $form->get('plainPassword')->getData();
 
@@ -45,9 +45,9 @@ use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
-                    ->from(new Address($_ENV['MAILER_ADDRESS_EMAIL'], $translator->trans('config.sender_name', [], 'emails') . ' - Techni-Elec'))
+                    ->from(new Address($_ENV['MAILER_ADDRESS_EMAIL'], $translator->trans('config.sender_name', [], 'emails') . ' - ' . $_ENV['SITE_NAME']))
                     ->to((string) $user->getEmail())
-                    ->subject($translator->trans('email.registration_confirmation.subject', [], 'emails'))
+                    ->subject($translator->trans('email.registration.confirmation_email.subject', [], 'emails'))
                     ->htmlTemplate('security/registration/confirmation_email.html.twig')
             );
 

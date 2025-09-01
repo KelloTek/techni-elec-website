@@ -156,7 +156,7 @@ class ResetPasswordController extends AbstractController
         }
 
         $email = (new TemplatedEmail())
-            ->from(new Address($_ENV['MAILER_ADDRESS_EMAIL'], $translator->trans('config.sender_name', [], 'emails') . ' - Techni-Elec'))
+            ->from(new Address($_ENV['MAILER_ADDRESS_EMAIL'], $translator->trans('config.sender_name', [], 'emails') . ' - ' . $_ENV['SITE_NAME']))
             ->to((string) $user->getEmail())
             ->subject($translator->trans('email.reset_password.subject', [], 'emails'))
             ->htmlTemplate('security/reset_password/email.html.twig')

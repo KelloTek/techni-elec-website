@@ -1,6 +1,6 @@
 twig:
     globals:
-        site_name: 'Techni-Elec'
+        site_name: '%env(SITE_NAME)%'
     file_name_pattern: '*.twig'
     form_themes: ['layout.html.twig']
 
