@@ -1,0 +1,26 @@
+pagination:
+    showing: "Affichage de %min% à %max% sur %total%"
+
+form:
+    filter:
+        label:
+            search: "Recherche"
+            date: "Sélectionner une date"
+        placeholder:
+            search: "Recherche"
+            date: "Date"
+        reset: "Réinitialiser les filtres"
+
+admin:
+    user:
+        list:
+            title: "Utilisateurs"
+            name: "Utilisateurs"
+            table:
+                id: "ID"
+                name: "NOM"
+                email: "EMAIL"
+                phone: "TÉLÉPHONE"
+                address: "ADRESSE"
+                date: "DATE"
+                action: "ACTION"

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset='UTF-8'>
+        <title>{% block title %}Profile{% endblock %} | {{ site_name }}</title>
+        <link rel='icon' href='{{ asset('build/images/favicon.svg') }}' type='image/svg+xml'>
+        {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+    </head>
+    <body class='flex flex-row w-screen h-screen overflow-hidden text-white bg-custom-dark-400'>
+        {% set adminLinks = [
+            { text: 'Tableau de bord', icon: 'bxs-dashboard', href: 'app_admin_home' },
+            { text: 'Utilisateurs', icon: 'bxs-user', href: 'app_admin_users' },
+            { text: 'Logout', icon: 'bxs-door-open', href: 'app_logout' }
+        ] %}
+
+        <nav class='flex flex-col w-[10vw] p-5 bg-custom-dark-300 gap-2 text-center'>
+            <a href='{{ path('app_user_home') }}' class='flex items-center justify-center  h-12 mb-5 -mt-2 hover:text-custom-orange-200'>
+                <i class='text-2xl font-bold bx bx-chevrons-right-left'></i>
+                Techni-Elec
+            </a>
+            {% if is_granted('ROLE_ADMIN') %}
+                {% for link in adminLinks %}
+                    <a href='{{ path(link.href) }}' class='flex justify-cente items-center h-12 rounded-lg text-lg font-semibold before:absolute before:-left-4 before:w-5 before:h-12 before:rounded-lg transition before:transition {{ app.request.get('_route') == link.href ? 'text-custom-orange-200 hover:text-custom-orange-100 before:bg-custom-orange-200 hover:before:bg-custom-orange-100' : 'hover:text-custom-dark-400 hover:before:bg-custom-dark-400'}}'>
+                        <i class='bx {{ link.icon }} text-2xl mr-2'></i>
+                        {{ link.text }}
+                    </a>
+                {% endfor %}
+            {% endif %}
+        </nav>
+
+        <div>
+            <header class='flex w-full p-5 bg-custom-dark-300'>
+                <div class='flex items-center'>
+                    <i class='text-xl bx bxs-bell'></i>
+                </div>
+                <div class='flex items-center'>
+                    <i class='text-3xl bx bx-user-circle'></i>
+                    <p class='font-semibold'>{{ app.user.name }}</p>
+                </div>
+            </header>
+
+            <main class='w-[90vw] h-full p-10 overflow-y-scroll'>
+                <h1 class='mb-10 text-3xl font-bold'>{% block name %}{% endblock %}</h1>
+                {% block body %}{% endblock %}
+            </main>
+        </div>
+    </body>
+</html>

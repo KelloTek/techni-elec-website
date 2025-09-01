@@ -33,7 +33,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
-    
+
     public function getCount(): int
     {
         return $this->createQueryBuilder('u')
@@ -70,6 +70,34 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
+    }
+
+    public function getSearchCount(string $search, string $date): int
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        if (!empty($search)) {
+            $escapedSearch = '%' . addcslashes($search, '%_') . '%';
+            $qb->leftJoin('u.address', 'a')
+                ->where("CONCAT(u.id, '') LIKE :search")
+                ->orWhere('u.name LIKE :search')
+                ->orWhere('u.email LIKE :search')
+                ->orWhere('u.phone LIKE :search')
+                ->orWhere('a.line LIKE :search')
+                ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
+                ->orWhere('a.city LIKE :search')
+                ->setParameter('search', $escapedSearch);
+        }
+
+        if ($date) {
+            $qb->andWhere('u.createdAt >= :startDate AND u.createdAt <= :endDate')
+                ->setParameter('startDate', new DateTime($date))
+                ->setParameter('endDate', (new DateTime($date))->modify('+1 day'));
+        }
+
+        return $qb->select('COUNT(u.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
     }
 
     //    /**

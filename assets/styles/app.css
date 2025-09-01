@@ -66,3 +66,86 @@ body {
 .form-result-address-item:hover {
     background-color: var(--color-custom-dark-400);
 }
+
+/* Date Picker */
+
+.air-datepicker-nav--title:hover,
+.air-datepicker-nav--action:hover,
+.air-datepicker-cell.-focus-,
+.air-datepicker-cell.-selected-.-focus-,
+.air-datepicker-cell.-month-.-focus-,
+.air-datepicker-cell.-selected-.-focus-,
+.air-datepicker-button:hover,
+.air-datepicker-cell.-selected-.-current- {
+    transition-property: color, background-color;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+}
+
+.air-datepicker,
+.air-datepicker--pointer::after {
+    border: 1px solid var(--color-custom-dark-100);
+}
+
+.air-datepicker-nav,
+.air-datepicker--content {
+    border-bottom: 1px solid var(--color-custom-dark-100);
+}
+
+.air-datepicker-nav,
+.air-datepicker--content,
+.air-datepicker--buttons,
+.air-datepicker--pointer::after {
+    background-color: var(--color-custom-dark-300);
+}
+
+.air-datepicker-nav--title,
+.air-datepicker-cell.-day-,
+.air-datepicker-cell.-month-,
+.air-datepicker-cell.-year- {
+    color: white;
+}
+
+.air-datepicker-cell.-current-.-focus- {
+    color: var(--color-custom-orange-100);
+}
+
+.air-datepicker-nav--title:hover,
+.air-datepicker-nav--action:hover,
+.air-datepicker-cell.-focus-,
+.air-datepicker-cell.-selected-.-focus-,
+.air-datepicker-cell.-month-.-focus- {
+    background-color: var(--color-custom-dark-100);
+}
+
+.air-datepicker--buttons {
+    border-top: 1px solid var(--color-custom-dark-100);
+}
+
+.air-datepicker-body--day-name,
+.air-datepicker-button,
+.air-datepicker-cell.-current- {
+    color: var(--color-custom-orange-200);
+}
+
+.air-datepicker-body--day-name {
+    font-weight: bold;
+}
+
+.air-datepicker-cell.-day-.-other-month-,
+.air-datepicker-nav--title i,
+.air-datepicker-cell.-year-.-other-decade- {
+    color: var(--color-custom-gray-100);
+}
+
+.air-datepicker-cell.-selected-,
+.air-datepicker-cell.-current-.-selected {
+    background-color: var(--color-custom-orange-200);
+}
+
+.air-datepicker-cell.-selected-.-focus-,
+.air-datepicker-button:hover,
+.air-datepicker-cell.-selected-.-current- {
+    background-color: var(--color-custom-orange-100);
+    color: white;
+}

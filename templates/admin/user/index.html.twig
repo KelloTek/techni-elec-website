@@ -1,0 +1,51 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.user.list.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.user.list.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% set keys = [
+        'admin.user.list.table.id'|trans(),
+        'admin.user.list.table.name'|trans(),
+        'admin.user.list.table.email'|trans(),
+        'admin.user.list.table.phone'|trans(),
+        'admin.user.list.table.address'|trans(),
+        'admin.user.list.table.date'|trans(),
+        'admin.user.list.table.action'|trans()
+    ] %}
+
+    {% set data = ['id', 'name', 'email', 'phone'] %}
+
+    {% embed 'components/table.html.twig' with {
+            root: root,
+            keys: keys,
+            values: users,
+            page: page,
+            total: userCount
+        } %}
+        {% block values %}
+            {% for d in data %}
+                <p class="flex items-center truncate mr-5">
+                    {{ attribute(value, d) }}
+                </p>
+            {% endfor %}
+            <p class="flex items-center truncate mr-5">
+                {{ value.address.line }} {{ value.address.zipCode }}
+                {{ value.address.city }}
+            </p>
+            <p class="flex items-center truncate mr-5">
+                {{ value.createdAt|date('d M Y') }}
+            </p>
+            <div class="flex items-center truncate mr-5">
+                <a href="{{ path('app_admin_user', { id: value.id }) }}">
+                    <i class="bx bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}
