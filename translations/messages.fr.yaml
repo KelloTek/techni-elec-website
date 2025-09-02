@@ -1,3 +1,7 @@
+role:
+    admin: "Administrateur"
+    user: "Utilisateur"
+
 pagination:
     showing: "Affichage de %min% à %max% sur %total%"
 
@@ -10,6 +14,13 @@ form:
             search: "Recherche"
             date: "Date"
         reset: "Réinitialiser les filtres"
+
+navigation:
+    profile:
+        logout: "Déconnexion"
+    admin:
+        dashboard: "Tableau de bord"
+        users: "Utilisateurs"
 
 admin:
     user:

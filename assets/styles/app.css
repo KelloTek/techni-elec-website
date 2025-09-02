@@ -2,7 +2,8 @@
 @import './boxicons.min.css';
 @source not '../../public';
 
-@theme {
+@theme static {
+    /* Colors */
     --color-custom-dark-100: #313d4f;
     --color-custom-dark-200: #323d4e;
     --color-custom-dark-300: #273142;
@@ -21,8 +22,46 @@
 
     --color-custom-red-100: #f93c65;
     --color-custom-red-200: #ef3826;
+
+    /* Spacing */
+    --spacing-custom-navigation-profile: 10vw;
+    --spacing-custom-navigation-profile-sm: 7vw;
+    --spacing-custom-main-profile: 90vw;
+    --spacing-custom-main-profile-sm: 93vw;
+
+    /* Animations */
+    --animate-custom-navigation-profile-close: navigation-profile-close 0.5s ease-in-out forwards;
+    --animate-custom-navigation-profile-open: navigation-profile-open 0.5s ease-in-out forwards;
+
+    @keyframes navigation-profile-close {
+        0% {
+            width: var(--spacing-custom-navigation-profile);
+        }
+        100% {
+            width: 0;
+            padding-right: 0;
+            padding-left: 0;
+            display: none;
+        }
+    }
+
+    @keyframes navigation-profile-open {
+        0% {
+            width: 0;
+            padding-right: 0;
+            padding-left: 0;
+            display: none;
+        }
+        100% {
+            width: var(--spacing-custom-navigation-profile);
+            padding-right: 1rem;
+            padding-left: 1rem;
+            display: flex;
+        }
+    }
 }
 
+/* Font Family */
 @font-face {
     font-family: 'Nunito-Sans';
     src: url('../fonts/nunito-sans.ttf') format('truetype');

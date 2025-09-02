@@ -14,39 +14,84 @@
     </head>
     <body class='flex flex-row w-screen h-screen overflow-hidden text-white bg-custom-dark-400'>
         {% set adminLinks = [
-            { text: 'Tableau de bord', icon: 'bxs-dashboard', href: 'app_admin_home' },
-            { text: 'Utilisateurs', icon: 'bxs-user', href: 'app_admin_users' },
-            { text: 'Logout', icon: 'bxs-door-open', href: 'app_logout' }
+            { text: 'navigation.admin.dashboard'|trans(), icon: 'bxs-dashboard', href: 'app_admin_home' },
+            { text: 'navigation.admin.users'|trans(), icon: 'bxs-user', href: 'app_admin_users' },
         ] %}
 
-        <nav class='flex flex-col w-[10vw] p-5 bg-custom-dark-300 gap-2 text-center'>
-            <a href='{{ path('app_user_home') }}' class='flex items-center justify-center  h-12 mb-5 -mt-2 hover:text-custom-orange-200'>
-                <i class='text-2xl font-bold bx bx-chevrons-right-left'></i>
-                Techni-Elec
+        {% set profileLinks = [
+            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout' }
+        ] %}
+
+        {% set utilsLinks = [
+            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout' }
+        ] %}
+
+        <nav class='flex flex-col w-custom-navigation-profile-sm lg:w-custom-navigation-profile p-5 bg-custom-dark-300 gap-2 text-center overflow-x-hidden animate-custom-navgation-profile-open' data-profile-navigation>
+            <a href='{{ path('app_user_home') }}' class='hidden 2xl:flex items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold'>
+                <span class="text-custom-orange-200">Techni</span>-Elec
             </a>
+
+            <a href='{{ path('app_user_home') }}' class='flex 2xl:hidden items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold'>
+                <span class="text-custom-orange-200">T</span>E
+            </a>
+
+            <hr class="text-custom-dark-100 mb-5">
+
             {% if is_granted('ROLE_ADMIN') %}
                 {% for link in adminLinks %}
-                    <a href='{{ path(link.href) }}' class='flex justify-cente items-center h-12 rounded-lg text-lg font-semibold before:absolute before:-left-4 before:w-5 before:h-12 before:rounded-lg transition before:transition {{ app.request.get('_route') == link.href ? 'text-custom-orange-200 hover:text-custom-orange-100 before:bg-custom-orange-200 hover:before:bg-custom-orange-100' : 'hover:text-custom-dark-400 hover:before:bg-custom-dark-400'}}'>
-                        <i class='bx {{ link.icon }} text-2xl mr-2'></i>
-                        {{ link.text }}
-                    </a>
+                    {% include 'components/profile-link.html.twig' with {
+                        href: link.href,
+                        icon: link.icon,
+                        text: link.text
+                    } %}
                 {% endfor %}
+                <hr class="text-custom-dark-100 my-5">
             {% endif %}
+
+            {% for link in profileLinks %}
+                {% include 'components/profile-link.html.twig' with {
+                    href: link.href,
+                    icon: link.icon,
+                    text: link.text
+                } %}
+            {% endfor %}
+
+            <hr class="text-custom-dark-100 my-5">
+
+            {% for link in utilsLinks %}
+                {% include 'components/profile-link.html.twig' with {
+                    href: link.href,
+                    icon: link.icon,
+                    text: link.text
+                } %}
+            {% endfor %}
         </nav>
 
         <div>
-            <header class='flex w-full p-5 bg-custom-dark-300'>
-                <div class='flex items-center'>
-                    <i class='text-xl bx bxs-bell'></i>
+            <header class='flex justify-end gap-1 w-full p-1 bg-custom-dark-300'>
+                <div class="flex items-center cursor-pointer">
+                    <i class="text-2xl font-bold bx-chevron-left" data-profile-navigation-showing-button></i>
                 </div>
-                <div class='flex items-center'>
-                    <i class='text-3xl bx bx-user-circle'></i>
-                    <p class='font-semibold'>{{ app.user.name }}</p>
+                <div class="flex items-center">
+                    <i class="text-xl bxs-bell"></i>
                 </div>
+                <a href="{{ path('app_user_home') }}">
+                    <div class="flex items-center p-2 rounded-lg hover:bg-custom-dark-400">
+                        <i class="text-4xl bxs-user-circle"></i>
+                        <div class="ml-2">
+                            <p class="font-semibold">{{ app.user.name }}</p>
+                            {% if is_granted('ROLE_ADMIN') %}
+                                <p class="text-sm">{{ 'role.admin'|trans() }}</p>
+                            {% else %}
+                                <p class="text-sm">{{ 'role.user'|trans() }}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
             </header>
 
-            <main class='w-[90vw] h-full p-10 overflow-y-scroll'>
-                <h1 class='mb-10 text-3xl font-bold'>{% block name %}{% endblock %}</h1>
+            <main class="w-custom-main-profile-sm lg:w-custom-main-profile h-full p-10 overflow-y-scroll">
+                <h1 class="mb-10 text-3xl font-bold">{% block name %}{% endblock %}</h1>
                 {% block body %}{% endblock %}
             </main>
         </div>

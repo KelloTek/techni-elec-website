@@ -8,5 +8,7 @@
 import './scripts/forms/address';
 import './scripts/forms/search';
 
+import './scripts/profile-navigation';
+
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';

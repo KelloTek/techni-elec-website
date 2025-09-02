@@ -30,20 +30,26 @@
         } %}
         {% block values %}
             {% for d in data %}
-                <p class="flex items-center truncate mr-5">
-                    {{ attribute(value, d) }}
-                </p>
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ attribute(value, d) }}
+                    </p>
+                </div>
             {% endfor %}
-            <p class="flex items-center truncate mr-5">
-                {{ value.address.line }} {{ value.address.zipCode }}
-                {{ value.address.city }}
-            </p>
-            <p class="flex items-center truncate mr-5">
-                {{ value.createdAt|date('d M Y') }}
-            </p>
-            <div class="flex items-center truncate mr-5">
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.address.line }}
+                    {{ value.address.zipCode }} {{ value.address.city }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.createdAt|date('d M Y') }}
+                </p>
+            </div>
+            <div class="flex items-center">
                 <a href="{{ path('app_admin_user', { id: value.id }) }}">
-                    <i class="bx bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
+                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
                 </a>
             </div>
         {% endblock %}

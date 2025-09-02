@@ -16,7 +16,7 @@
     { title: 'Adresse', text: address, icon: 'bxs-home', color: 'orange-100' }
 ] %}
 
-<div class='grid grid-cols-4 gap-5'>
+<div class='grid grid-cols-2 lg:grid-cols-4 gap-5'>
     {% for info in informations %}
         {% include 'components/card.html.twig' with {
             title: info.title,
