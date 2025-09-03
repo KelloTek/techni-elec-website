@@ -14,7 +14,7 @@ class FileFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $uploadDir = 'public/uploads';
-        $privateUploadDir = 'private/uploads/admin';
+        $privateUploadDir = 'private/uploads/1';
 
         if (!is_dir($uploadDir)) {
             mkdir($uploadDir, 0777, true);

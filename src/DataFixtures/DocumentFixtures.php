@@ -18,22 +18,12 @@ class DocumentFixtures extends Fixture implements DependentFixtureInterface
     {
         $faker = Factory::create('fr_FR');
 
-        $document = new Document();
-        $document->setName($faker->word());
-        $document->setCategory($this->getReference(DocumentCategoryFixtures::DOCUMENT_CATEGORY_REFERENCE . rand(0, 9), DocumentCategory::class));
-        $document->setUser($this->getReference(UserFixtures::USER_REFERENCE . 'admin', User::class));
-        $document->setFile($this->getReference(FileFixtures::PDF_REFERENCE . rand(0, 2), File::class));
-        $document->setRequest($this->getReference(RequestFixtures::REQUEST_REFERENCE . rand(0, 7), Request::class));
-        $document->setCreatedAt();
-
-        $manager->persist($document);
-
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 3; $i++) {
             $document = new Document();
             $document->setName($faker->word());
             $document->setCategory($this->getReference(DocumentCategoryFixtures::DOCUMENT_CATEGORY_REFERENCE . $i, DocumentCategory::class));
-            $document->setUser($this->getReference(UserFixtures::USER_REFERENCE . $i, User::class));
-            $document->setFile($this->getReference(FileFixtures::PDF_REFERENCE . rand(0, 2), File::class));
+            $document->setUser($this->getReference(UserFixtures::USER_REFERENCE. 'admin', User::class));
+            $document->setFile($this->getReference(FileFixtures::PDF_REFERENCE . $i, File::class));
             $document->setRequest($this->getReference(RequestFixtures::REQUEST_REFERENCE . rand(0, 7), Request::class));
             $document->setCreatedAt();
 
