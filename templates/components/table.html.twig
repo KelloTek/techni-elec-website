@@ -2,26 +2,38 @@
 
 <form class="flex border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" method="GET" data-search-form>
     <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
-        <i class="text-2xl bx bx-filter"></i>
+        <i class="text-2xl bx-filter"></i>
     </div>
     <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
-        <input type="search" id="search" name="search" placeholder="{{ 'form.filter.placeholder.search'|trans() }}" value="{{ search }}" aria-label="{{ 'form.filter.label.search'|trans() }}" data-search-input
+        <input type="search" id="search" name="search" placeholder="{{ 'filter.placeholder.search'|trans([], 'forms') }}" value="{{ search }}" aria-label="{{ 'filter.label.search'|trans([], 'forms') }}" data-search-input
                class="bg-custom-dark-200 accent-custom-orange-200 rounded-xl p-1 px-2">
         <label for="search" class="flex cursor-pointer">
-            <i class="text-xl bx bx-search-alt ml-2"></i>
+            <i class="text-xl bx-search-alt ml-2"></i>
         </label>
     </div>
     <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
-        <input type="text" id="date" name="date" placeholder="{{ 'form.filter.placeholder.date'|trans() }}" value="{{ date }}" aria-label="{{ 'form.filter.label.date'|trans() }}" readonly data-search-date-input
+        <select id="type" name="type" aria-label="{{ 'filter.label.type'|trans([], 'forms') }}" data-search-type-input
+               class="p-1 px-2 cursor-pointer">
+            <option value="" {{ type == '' ? 'selected' : '' }} disabled>{{ 'filter.options.type.placeholder'|trans([], 'forms') }}</option>
+            {% for option in optionsType %}
+                <option value="{{ option.value }}" {{ type == option.value ? 'selected' : '' }}>{{ option.label }}</option>
+            {% endfor %}
+        </select>
+        <label for="type" class="flex cursor-pointer">
+            <i class="text-xl bx-grid-search ml-2"></i>
+        </label>
+    </div>
+    <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+        <input type="text" id="date" name="date" placeholder="{{ 'filter.placeholder.date'|trans([], 'forms') }}" value="{{ date }}" aria-label="{{ 'filter.label.date'|trans([], 'forms') }}" readonly data-search-date-input
                class="w-27 accent-custom-orange-200 rounded-xl p-1 px-2 cursor-pointer">
         <label for="date" class="flex cursor-pointer">
-            <i class="text-xl bx bx-calendar ml-2"></i>
+            <i class="text-xl bx-calendar ml-2"></i>
         </label>
     </div>
     <div class="flex items-center p-4 text-custom-orange-200">
         <button type="reset" class="flex cursor-pointer hover:text-custom-orange-100">
             <i class="text-xl bx bx-turn-left mr-2"></i>
-            {{ 'form.filter.reset'|trans() }}
+            {{ 'filter.reset'|trans([], 'forms') }}
         </button>
     </div>
 </form>
@@ -29,7 +41,7 @@
 {# Table #}
 
 <div class="border-custom-dark-100 mt-5 grid grid-cols-1 overflow-hidden rounded-xl border-1">
-    <div class="bg-custom-dark-200 grid grid-cols-7 p-5 font-bold">
+    <div class="bg-custom-dark-200 grid {{ gridSize }} p-5 font-bold">
         {% for key in keys %}
             <p class="truncate mr-5">
                 {{ key }}
@@ -38,7 +50,7 @@
     </div>
 
     {% for value in values %}
-        <div class="border-custom-dark-100 bg-custom-dark-300 grid grid-cols-7 border-t p-5">
+        <div class="border-custom-dark-100 bg-custom-dark-300 grid {{ gridSize }} border-t p-5">
             {% block values %}{% endblock %}
         </div>
     {% endfor %}
@@ -68,7 +80,7 @@
             {% set previousPage = page - 1 %}
         {% endif %}
 
-        <a href="{{ path(root, { page: previousPage, search: search, date: date }) }}">
+        <a href="{{ path(root, (params|default({})|merge({ page: previousPage, search: search, date: date }))) }}">
             <i class="bx bx-chevron-left bg-custom-dark-300 border-custom-dark-100 rounded-l-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
                 page == firstPage ? 'text-custom-gray-100' : '' }}"></i>
         </a>
@@ -81,7 +93,7 @@
             {% set nextPage = page + 1 %}
         {% endif %}
 
-        <a href="{{ path(root, {page: nextPage, search: search, date: date}) }}">
+        <a href="{{ path(root, (params|default({})|merge({page: nextPage, search: search, date: date}))) }}">
             <i class="bx bx-chevron-right bg-custom-dark-300 border-custom-dark-100 rounded-r-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
                 page == totalPage ? 'text-custom-gray-100' : '' }}"></i>
         </a>

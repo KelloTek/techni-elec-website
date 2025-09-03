@@ -5,16 +5,6 @@ role:
 pagination:
     showing: "Affichage de %min% à %max% sur %total%"
 
-form:
-    filter:
-        label:
-            search: "Recherche"
-            date: "Sélectionner une date"
-        placeholder:
-            search: "Recherche"
-            date: "Date"
-        reset: "Réinitialiser les filtres"
-
 navigation:
     profile:
         logout: "Déconnexion"
@@ -35,3 +25,20 @@ admin:
                 address: "ADRESSE"
                 date: "DATE"
                 action: "ACTION"
+        show:
+            title: "Utilisateur (%name%)"
+            name: "Utilisateur n°%id%"
+            info:
+                name: "Nom"
+                email: "Email"
+                phone: "Téléphone"
+                address: "Adresse"
+            document:
+                title: "Documents associés"
+                table:
+                    id: "ID"
+                    name: "NOM"
+                    category: "CATÉGORIE"
+                    file: "FICHIER"
+                    date: "DATE"
+                    action: "ACTION"

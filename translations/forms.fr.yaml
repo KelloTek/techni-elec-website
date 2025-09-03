@@ -73,3 +73,24 @@ message:
         agree_terms: "Vous devez accepter nos conditions générales"
     invalid_message:
         password: "Les champs du mot de passe doivent correspondre."
+
+filter:
+    label:
+        type: "Sélectionner type de filtre"
+        search: "Recherche"
+        date: "Sélectionner une date"
+    placeholder:
+        search: "Recherche"
+        date: "Date"
+    reset: "Réinitialiser les filtres"
+    options:
+        type:
+            placeholder: "Type de filtre"
+            all: "Tous"
+            id: "Id"
+            name: "Nom"
+            email: "Email"
+            phone: "Téléphone"
+            address: "Adresse"
+            category: "Catégorie"
+            file: "Fichier"

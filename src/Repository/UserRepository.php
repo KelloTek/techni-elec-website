@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -42,21 +43,45 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getSingleScalarResult();
     }
 
-    public function search(string $search, string $date, int $limit, int $offset): array
+    public function search(string $type, string $search, string $date, int $limit, int $offset): array
     {
         $qb = $this->createQueryBuilder('u');
 
         if (!empty($search)) {
             $escapedSearch = '%' . addcslashes($search, '%_') . '%';
-            $qb->leftJoin('u.address', 'a')
-                ->where("CONCAT(u.id, '') LIKE :search")
-                ->orWhere('u.name LIKE :search')
-                ->orWhere('u.email LIKE :search')
-                ->orWhere('u.phone LIKE :search')
-                ->orWhere('a.line LIKE :search')
-                ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
-                ->orWhere('a.city LIKE :search')
-                ->setParameter('search', $escapedSearch);
+
+            switch ($type) {
+                case 'id':
+                    $qb->where("CONCAT(u.id, '') LIKE :search");
+                    break;
+                case 'name':
+                    $qb->where('LOWER(u.name) LIKE :search');
+                    break;
+                case 'email':
+                    $qb->where('LOWER(u.email) LIKE :search');
+                    break;
+                case 'phone':
+                    $qb->where('LOWER(u.phone) LIKE :search');
+                    break;
+                case 'address':
+                    $qb->leftJoin('u.address', 'a')
+                        ->where('LOWER(a.line) LIKE :search')
+                        ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
+                        ->orWhere('LOWER(a.city) LIKE :search');
+                    break;
+                default:
+                    $qb->leftJoin('u.address', 'a')
+                        ->where("CONCAT(u.id, '') LIKE :search")
+                        ->orWhere('LOWER(u.name) LIKE :search')
+                        ->orWhere('LOWER(u.email) LIKE :search')
+                        ->orWhere('LOWER(u.phone) LIKE :search')
+                        ->orWhere('LOWER(a.line) LIKE :search')
+                        ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
+                        ->orWhere('LOWER(a.city) LIKE :search');
+                    break;
+            }
+
+            $qb->setParameter('search', strtolower($escapedSearch));
         }
 
         if ($date) {
@@ -65,39 +90,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('endDate', (new DateTime($date))->modify('+1 day'));
         }
 
-        return $qb->orderBy('u.id', 'ASC')
+        $qb->orderBy('u.id', 'ASC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
             ->getResult();
-    }
 
-    public function getSearchCount(string $search, string $date): int
-    {
-        $qb = $this->createQueryBuilder('u');
+        $paginator = new Paginator($qb, true);
 
-        if (!empty($search)) {
-            $escapedSearch = '%' . addcslashes($search, '%_') . '%';
-            $qb->leftJoin('u.address', 'a')
-                ->where("CONCAT(u.id, '') LIKE :search")
-                ->orWhere('u.name LIKE :search')
-                ->orWhere('u.email LIKE :search')
-                ->orWhere('u.phone LIKE :search')
-                ->orWhere('a.line LIKE :search')
-                ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
-                ->orWhere('a.city LIKE :search')
-                ->setParameter('search', $escapedSearch);
-        }
-
-        if ($date) {
-            $qb->andWhere('u.createdAt >= :startDate AND u.createdAt <= :endDate')
-                ->setParameter('startDate', new DateTime($date))
-                ->setParameter('endDate', (new DateTime($date))->modify('+1 day'));
-        }
-
-        return $qb->select('COUNT(u.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
+        return [
+            'results' => iterator_to_array($paginator),
+            'count' => count($paginator),
+        ];
     }
 
     //    /**

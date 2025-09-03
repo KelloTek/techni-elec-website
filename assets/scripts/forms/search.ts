@@ -27,4 +27,10 @@ searchForms.forEach((form: HTMLFormElement) => {
     searchInput.addEventListener('change', () => {
         form.submit();
     });
+
+    const typeInput = form.querySelector('[data-search-type-input]') as HTMLInputElement;
+
+    typeInput.addEventListener('change', () => {
+        form.submit();
+    });
 });

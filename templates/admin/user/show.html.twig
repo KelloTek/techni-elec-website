@@ -1,30 +1,85 @@
 {% extends 'profile-base.html.twig' %}
 
-{% block title %}Admin - Utilisateur ({{ user.name }}){% endblock %}
+{% block title %}
+    Admin - {{ 'admin.user.show.title'|trans({'%name%': user.name}) }}
+{% endblock %}
 
-{% block name %}Utilisateur n{{ user.id }}{% endblock %}
+{% block name %}
+    {{ 'admin.user.show.name'|trans({'%id%': user.id}) }}
+{% endblock %}
 
 {% block body %}
+    {# User Information #}
+    {% set address = user.address.line ~ ' ' ~ user.address.zipCode ~ ' ' ~ user.address.city %}
 
-{# Information #}
-{% set address = user.address.line ~ ' ' ~ user.address.zipCode ~ ' ' ~ user.address.city %}
+    {% set informations = [
+        { title: 'admin.user.show.info.name'|trans(), text: user.name, icon: 'bxs-user', color: 'blue-100' },
+        { title: 'admin.user.show.info.email'|trans(), text: user.email, icon: 'bxs-envelope', color: 'yellow-100' },
+        { title: 'admin.user.show.info.phone'|trans(), text: user.phone, icon: 'bxs-phone', color: 'green-100' },
+        { title: 'admin.user.show.info.address'|trans(), text: address, icon: 'bxs-home', color: 'orange-100' }
+    ] %}
 
-{% set informations = [
-    { title: 'Nom', text: user.name, icon: 'bxs-user', color: 'blue-100' },
-    { title: 'Email', text: user.email, icon: 'bxs-envelope', color: 'yellow-100' },
-    { title: 'Téléphone', text: user.phone, icon: 'bxs-phone', color: 'green-100' },
-    { title: 'Adresse', text: address, icon: 'bxs-home', color: 'orange-100' }
-] %}
+    <div class='grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24'>
+        {% for info in informations %}
+            {% include 'components/card.html.twig' with {
+                title: info.title,
+                text: info.text,
+                icon: info.icon,
+                color: info.color
+            } only %}
+        {% endfor %}
+    </div>
 
-<div class='grid grid-cols-2 lg:grid-cols-4 gap-5'>
-    {% for info in informations %}
-        {% include 'components/card.html.twig' with {
-            title: info.title,
-            text: info.text,
-            icon: info.icon,
-            color: info.color
-        } only %}
-    {% endfor %}
-</div>
+    {# User Documents #}
+    <h2 class="mb-10 text-3xl font-bold">{{ 'admin.user.show.document.title'|trans() }}</h2>
 
+    {% set keys = [
+        'admin.user.show.document.table.id'|trans(),
+        'admin.user.show.document.table.name'|trans(),
+        'admin.user.show.document.table.category'|trans(),
+        'admin.user.show.document.table.file'|trans(),
+        'admin.user.show.document.table.date'|trans(),
+        'admin.user.show.document.table.action'|trans()
+    ] %}
+
+    {% set data = ['id', 'name'] %}
+
+    {% embed 'components/table.html.twig' with {
+        root: root,
+        keys: keys,
+        values: documents,
+        page: page,
+        total: documentCount,
+        gridSize: 'grid-cols-6',
+    } %}
+        {% block values %}
+            {% for d in data %}
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ attribute(value, d) }}
+                    </p>
+                </div>
+            {% endfor %}
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.category.label }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.file.name }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.createdAt|date('d M Y') }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <a href="{{ path('app_admin_document_show', { 'user': value.user.id, 'document': value.file.name }) }}" target="_blank">
+                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

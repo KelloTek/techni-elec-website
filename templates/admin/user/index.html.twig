@@ -22,12 +22,13 @@
     {% set data = ['id', 'name', 'email', 'phone'] %}
 
     {% embed 'components/table.html.twig' with {
-            root: root,
-            keys: keys,
-            values: users,
-            page: page,
-            total: userCount
-        } %}
+        root: root,
+        keys: keys,
+        values: users,
+        page: page,
+        total: userCount,
+        gridSize: 'grid-cols-7',
+    } %}
         {% block values %}
             {% for d in data %}
                 <div class="flex items-center">
