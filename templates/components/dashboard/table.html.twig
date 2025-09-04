@@ -1,0 +1,106 @@
+{# Filter #}
+
+<div class="flex flex-col lg:flex-row justify-between gap-5">
+    <form class="flex border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" method="GET" data-search-form>
+        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+            <i class="text-2xl bx-filter"></i>
+        </div>
+        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+            <input type="search" id="search" name="search" placeholder="{{ 'filter.placeholder.search'|trans([], 'forms') }}" value="{{ search }}" aria-label="{{ 'filter.label.search'|trans([], 'forms') }}" data-search-input
+                   class="bg-custom-dark-200 accent-custom-orange-200 rounded-xl p-1 px-2">
+            <label for="search" class="flex cursor-pointer">
+                <i class="text-xl bx-search-alt ml-2"></i>
+            </label>
+        </div>
+        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+            <select id="type" name="type" aria-label="{{ 'filter.label.type'|trans([], 'forms') }}" data-search-type-input
+                   class="p-1 px-2 cursor-pointer">
+                <option value="" {{ type == '' ? 'selected' : '' }} disabled>{{ 'filter.options.type.placeholder'|trans([], 'forms') }}</option>
+                {% for option in optionsType %}
+                    <option value="{{ option.value }}" {{ type == option.value ? 'selected' : '' }}>{{ option.label }}</option>
+                {% endfor %}
+            </select>
+            <label for="type" class="flex cursor-pointer">
+                <i class="text-xl bx-grid-search ml-2"></i>
+            </label>
+        </div>
+        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+            <input type="text" id="date" name="date" placeholder="{{ 'filter.placeholder.date'|trans([], 'forms') }}" value="{{ date }}" aria-label="{{ 'filter.label.date'|trans([], 'forms') }}" readonly data-search-date-input
+                   class="w-27 accent-custom-orange-200 rounded-xl p-1 px-2 cursor-pointer">
+            <label for="date" class="flex cursor-pointer">
+                <i class="text-xl bx-calendar ml-2"></i>
+            </label>
+        </div>
+        <div class="flex items-center p-4 text-custom-orange-200">
+            <button type="reset" class="flex cursor-pointer hover:text-custom-orange-100">
+                <i class="text-xl bx bx-turn-left mr-2"></i>
+                {{ 'filter.reset'|trans([], 'forms') }}
+            </button>
+        </div>
+    </form>
+    <div class="flex flex-row gap-5">
+        {% block buttons %}{% endblock %}
+    </div>
+</div>
+
+{# Table #}
+
+<div class="border-custom-dark-100 mt-5 grid grid-cols-1 overflow-hidden rounded-xl border-1">
+    <div class="bg-custom-dark-200 grid {{ gridSize }} p-5 font-bold">
+        {% for key in keys %}
+            <p class="truncate mr-5">
+                {{ key }}
+            </p>
+        {% endfor %}
+    </div>
+
+    {% for value in values %}
+        <div class="border-custom-dark-100 bg-custom-dark-300 grid {{ gridSize }} border-t p-5">
+            {% block values %}{% endblock %}
+        </div>
+    {% endfor %}
+</div>
+
+{# Pagination #}
+
+<div class="mt-5 mb-12 flex w-full flex-row justify-between">
+    {% set firstPage = 1 %}
+    {% set totalPage = (total / 10 + 1)|round(0, 'floor') %}
+
+    {# Counter #}
+
+    {% set showMin = page * 10 - 9 %}
+    {% set showMax = page * 10 %}
+
+    <p class="text-custom-gray-100">
+        {{ 'pagination.showing'|trans({'%min%' : showMin, '%max%': showMax, '%total%': total}) }}
+    </p>
+
+    <div class="flex text-xl">
+        {# Previous Page #}
+
+        {% set previousPage = firstPage %}
+
+        {% if page != firstPage %}
+            {% set previousPage = page - 1 %}
+        {% endif %}
+
+        <a href="{{ path(root, (params|default({})|merge({ page: previousPage, type: type, search: search, date: date }))) }}">
+            <i class="bx-chevron-left bg-custom-dark-300 border-custom-dark-100 rounded-l-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
+                page == firstPage ? 'text-custom-gray-100' : '' }}"></i>
+        </a>
+
+        {# Next Page #}
+
+        {% set nextPage = page %}
+
+        {% if page != totalPage %}
+            {% set nextPage = page + 1 %}
+        {% endif %}
+
+        <a href="{{ path(root, (params|default({})|merge({page: nextPage, type: type, search: search, date: date}))) }}">
+            <i class="bx-chevron-right bg-custom-dark-300 border-custom-dark-100 rounded-r-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
+                page == totalPage ? 'text-custom-gray-100' : '' }}"></i>
+        </a>
+    </div>
+</div>

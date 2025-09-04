@@ -35,46 +35,38 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
-    public function getCount(): int
-    {
-        return $this->createQueryBuilder('u')
-            ->select('COUNT(u.id)')
-            ->getQuery()
-            ->getSingleScalarResult();
-    }
-
     public function search(string $type, string $search, string $date, int $limit, int $offset): array
     {
-        $qb = $this->createQueryBuilder('u');
+        $qb = $this->createQueryBuilder('q');
 
         if (!empty($search)) {
             $escapedSearch = '%' . addcslashes($search, '%_') . '%';
 
             switch ($type) {
                 case 'id':
-                    $qb->where("CONCAT(u.id, '') LIKE :search");
+                    $qb->where("CONCAT(q.id, '') LIKE :search");
                     break;
                 case 'name':
-                    $qb->where('LOWER(u.name) LIKE :search');
+                    $qb->where('LOWER(q.name) LIKE :search');
                     break;
                 case 'email':
-                    $qb->where('LOWER(u.email) LIKE :search');
+                    $qb->where('LOWER(q.email) LIKE :search');
                     break;
                 case 'phone':
-                    $qb->where('LOWER(u.phone) LIKE :search');
+                    $qb->where('LOWER(q.phone) LIKE :search');
                     break;
                 case 'address':
-                    $qb->leftJoin('u.address', 'a')
+                    $qb->leftJoin('q.address', 'a')
                         ->where('LOWER(a.line) LIKE :search')
                         ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
                         ->orWhere('LOWER(a.city) LIKE :search');
                     break;
                 default:
-                    $qb->leftJoin('u.address', 'a')
-                        ->where("CONCAT(u.id, '') LIKE :search")
-                        ->orWhere('LOWER(u.name) LIKE :search')
-                        ->orWhere('LOWER(u.email) LIKE :search')
-                        ->orWhere('LOWER(u.phone) LIKE :search')
+                    $qb->leftJoin('q.address', 'a')
+                        ->where("CONCAT(q.id, '') LIKE :search")
+                        ->orWhere('LOWER(q.name) LIKE :search')
+                        ->orWhere('LOWER(q.email) LIKE :search')
+                        ->orWhere('LOWER(q.phone) LIKE :search')
                         ->orWhere('LOWER(a.line) LIKE :search')
                         ->orWhere("CONCAT(a.zipCode, '') LIKE :search")
                         ->orWhere('LOWER(a.city) LIKE :search');
@@ -85,12 +77,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         if ($date) {
-            $qb->andWhere('u.createdAt >= :startDate AND u.createdAt <= :endDate')
+            $qb->andWhere('q.createdAt >= :startDate AND q.createdAt <= :endDate')
                 ->setParameter('startDate', new DateTime($date))
                 ->setParameter('endDate', (new DateTime($date))->modify('+1 day'));
         }
 
-        $qb->orderBy('u.id', 'ASC')
+        $qb->orderBy('q.id', 'ASC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

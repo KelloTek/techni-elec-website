@@ -14,17 +14,17 @@
     </head>
     <body class='flex flex-row w-screen h-screen overflow-hidden text-white bg-custom-dark-400'>
         {% set adminLinks = [
-            { text: 'navigation.admin.dashboard'|trans(), icon: 'bxs-dashboard', href: 'app_admin_home' },
-            { text: 'navigation.admin.users'|trans(), icon: 'bxs-user', href: 'app_admin_users' },
-            { text: 'navigation.admin.documents'|trans(), icon: 'bxs-file', href: 'app_admin_documents' },
+            { text: 'navigation.admin.dashboard'|trans(), icon: 'bxs-dashboard', href: 'app_admin_home', hrefs: ['app_admin_home'] },
+            { text: 'navigation.admin.users'|trans(), icon: 'bxs-user', href: 'app_admin_users', hrefs: ['app_admin_users', 'app_admin_user'] },
+            { text: 'navigation.admin.documents'|trans(), icon: 'bxs-file', href: 'app_admin_documents', hrefs: ['app_admin_documents', 'app_admin_document_categories', 'app_admin_document_category_new'] },
         ] %}
 
         {% set profileLinks = [
-            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout' }
+            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout', hrefs: ['app_logout'] }
         ] %}
 
         {% set utilsLinks = [
-            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout' }
+            { text: 'navigation.profile.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout', hrefs: ['app_logout'] }
         ] %}
 
         <nav class='flex flex-col w-custom-navigation-profile-sm lg:w-custom-navigation-profile p-5 bg-custom-dark-300 gap-2 text-center overflow-x-hidden animate-custom-navgation-profile-open' data-profile-navigation>
@@ -40,7 +40,7 @@
 
             {% if is_granted('ROLE_ADMIN') %}
                 {% for link in adminLinks %}
-                    {% include 'components/profile-link.html.twig' with {
+                    {% include 'components/dashboard/profile-link.html.twig' with {
                         href: link.href,
                         icon: link.icon,
                         text: link.text
@@ -50,7 +50,7 @@
             {% endif %}
 
             {% for link in profileLinks %}
-                {% include 'components/profile-link.html.twig' with {
+                {% include 'components/dashboard/profile-link.html.twig' with {
                     href: link.href,
                     icon: link.icon,
                     text: link.text
@@ -60,7 +60,7 @@
             <hr class="text-custom-dark-100 my-5">
 
             {% for link in utilsLinks %}
-                {% include 'components/profile-link.html.twig' with {
+                {% include 'components/dashboard/profile-link.html.twig' with {
                     href: link.href,
                     icon: link.icon,
                     text: link.text

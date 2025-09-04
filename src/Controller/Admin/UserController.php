@@ -40,7 +40,6 @@ final class UserController extends AbstractController
             'userCount' => $users['count'],
             'users' => $users['results'],
             'optionsType' => [
-                ['value' => 'all', 'label' => $this->translator->trans('filter.options.type.all', [], 'forms')],
                 ['value' => 'id', 'label' => $this->translator->trans('filter.options.type.id', [], 'forms')],
                 ['value' => 'name', 'label' => $this->translator->trans('filter.options.type.name', [], 'forms')],
                 ['value' => 'email', 'label' => $this->translator->trans('filter.options.type.email', [], 'forms')],
@@ -75,7 +74,6 @@ final class UserController extends AbstractController
             'documentCount' => $documents['count'],
             'documents' => $documents['results'],
             'optionsType' => [
-                ['value' => 'all', 'label' => $translator->trans('filter.options.type.all', [], 'forms')],
                 ['value' => 'id', 'label' => $translator->trans('filter.options.type.id', [], 'forms')],
                 ['value' => 'name', 'label' => $translator->trans('filter.options.type.name', [], 'forms')],
                 ['value' => 'category', 'label' => $translator->trans('filter.options.type.category', [], 'forms')],

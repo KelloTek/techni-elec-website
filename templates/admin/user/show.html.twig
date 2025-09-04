@@ -21,7 +21,7 @@
 
     <div class='grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24'>
         {% for info in informations %}
-            {% include 'components/card.html.twig' with {
+            {% include 'components/dashboard/card.html.twig' with {
                 title: info.title,
                 text: info.text,
                 icon: info.icon,
@@ -44,7 +44,7 @@
 
     {% set data = ['id', 'name'] %}
 
-    {% embed 'components/table.html.twig' with {
+    {% embed 'components/dashboard/table.html.twig' with {
         root: root,
         keys: keys,
         values: documents,
@@ -75,10 +75,21 @@
                     {{ value.createdAt|date('d M Y') }}
                 </p>
             </div>
-            <div class="flex items-center">
-                <a href="{{ path('app_admin_document', { 'user': value.user.id, 'document': value.file.name }) }}" target="_blank">
-                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
-                </a>
+            <div class="flex items-center gap-1">
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_document',
+                    rootParams: { user: value.user.id, document: value.file.name },
+                    icon: 'bxs-eye',
+                    isBlank: true,
+                    isDanger: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_document',
+                    rootParams: { 'user': value.user.id, 'document': value.file.name },
+                    icon: 'bxs-trash',
+                    isBlank: false,
+                    isDanger: true,
+                } %}
             </div>
         {% endblock %}
     {% endembed %}

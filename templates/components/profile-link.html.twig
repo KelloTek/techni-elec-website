@@ -1,4 +1,0 @@
-<a href='{{ path(href) }}' class='flex items-center h-12 rounded-lg text-lg font-semibold before:absolute before:-left-4 before:w-5 before:h-12 before:rounded-lg transition before:transition {{ app.request.get('_route') == link.href ? 'text-custom-orange-200 hover:text-custom-orange-100 before:bg-custom-orange-200 hover:before:bg-custom-orange-100' : 'hover:text-custom-dark-400 hover:before:bg-custom-dark-400'}}'>
-    <i class='{{ icon }} text-2xl mr-2'></i>
-    <span class="hidden lg:grid truncate">{{ text }}</span>
-</a>

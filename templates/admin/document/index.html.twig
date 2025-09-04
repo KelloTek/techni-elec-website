@@ -21,7 +21,7 @@
 
     {% set data = ['id', 'name'] %}
 
-    {% embed 'components/table.html.twig' with {
+    {% embed 'components/dashboard/table.html.twig' with {
         root: root,
         keys: keys,
         values: documents,
@@ -29,6 +29,21 @@
         total: documentCount,
         gridSize: 'grid-cols-7',
     } %}
+        {% block buttons %}
+            {% include 'components/dashboard/button-table.html.twig' with {
+                root: 'app_admin_document_categories',
+                rootParams: null,
+                icon: 'bxs-eye',
+                text: 'admin.document.list.view'|trans(),
+            } %}
+            {% include 'components/dashboard/button-table.html.twig' with {
+                root: 'app_admin_document_categories',
+                rootParams: null,
+                icon: 'bxs-file-plus',
+                text: 'admin.document.list.add'|trans(),
+            } %}
+        {% endblock %}
+
         {% block values %}
             {% for d in data %}
                 <div class="flex items-center">
@@ -58,12 +73,27 @@
                 </p>
             </div>
             <div class="flex items-center gap-1">
-                <a href="{{ path('app_admin_document', { 'user': value.user.id, 'document': value.file.name }) }}" target="_blank">
-                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
-                </a>
-                <a href="{{ path('app_admin_user', { id: value.user.id }) }}">
-                    <i class="bxs-user bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
-                </a>
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_document',
+                    rootParams: { 'user': value.user.id, 'document': value.file.name },
+                    icon: 'bxs-eye',
+                    isBlank: true,
+                    isDanger: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_user',
+                    rootParams: { 'id': value.user.id },
+                    icon: 'bxs-user',
+                    isBlank: false,
+                    isDanger: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_document',
+                    rootParams: { 'user': value.user.id, 'document': value.file.name },
+                    icon: 'bxs-trash',
+                    isBlank: false,
+                    isDanger: true,
+                } %}
             </div>
         {% endblock %}
     {% endembed %}

@@ -21,7 +21,7 @@
 
     {% set data = ['id', 'name', 'email', 'phone'] %}
 
-    {% embed 'components/table.html.twig' with {
+    {% embed 'components/dashboard/table.html.twig' with {
         root: root,
         keys: keys,
         values: users,
@@ -48,10 +48,21 @@
                     {{ value.createdAt|date('d M Y') }}
                 </p>
             </div>
-            <div class="flex items-center">
-                <a href="{{ path('app_admin_user', { id: value.id }) }}">
-                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
-                </a>
+            <div class="flex items-center gap-1">
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_user',
+                    rootParams: { 'id': value.id },
+                    icon: 'bxs-eye',
+                    isBlank: false,
+                    isDanger: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    root: 'app_admin_user',
+                    rootParams: { 'id': value.id },
+                    icon: 'bxs-trash',
+                    isBlank: false,
+                    isDanger: true,
+                } %}
             </div>
         {% endblock %}
     {% endembed %}

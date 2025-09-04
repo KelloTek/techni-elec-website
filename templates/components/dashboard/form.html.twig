@@ -1,0 +1,31 @@
+<div class="flex h-full w-full items-center justify-center">
+    <div class="grid overflow-scroll rounded-xl p-12 text-white max-h-[90vh] lg:max-w-[60vw] bg-custom-dark-300 scrollbar-hide">
+
+        <div class="text-center">
+            <h1 class="text-3xl font-bold">{{ title }}</h1>
+            <p class="mt-3 mb-12">{{ description }}</p>
+        </div>
+
+        {% block beforeForm %}
+        {% endblock %}
+
+        {{ form_errors(form) }}
+
+        {{ form_start(form, { attr: { class: "grid gap-4"}}) }}
+
+        {% block form %}
+        {% endblock %}
+
+        <div class="flex justify-center">
+            <button type="submit" class="my-5 cursor-pointer rounded-xl p-3 text-xl w-[80%] bg-custom-orange-200 hover:bg-custom-orange-100 transition">
+                {{ submit|default('Envoyer') }}
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+
+        {% block afterForm %}
+        {% endblock %}
+
+    </div>
+</div>

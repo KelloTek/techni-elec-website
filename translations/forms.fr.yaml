@@ -11,6 +11,7 @@ label:
         city: "Ville"
     agree_terms: "J'accepte les conditions générales."
     honeypot: "Pays"
+    label: "Libellé"
 
 placeholder:
     name: "Jean DUPONT ou Société XYZ"
@@ -22,6 +23,7 @@ placeholder:
         zip_code: "63000"
         city: "Clermont-Ferrand"
     honeypot: "France"
+    label: "Electronique, Papier..."
 
 message:
     form:
@@ -54,6 +56,11 @@ message:
             title: "Réinitialisation du mot de passe"
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
+        new_document_category:
+            title: "Ajouter une catégorie de document"
+            description: "Veuillez saisir les informations de la catégorie"
+            submit: "Ajouter la catégorie"
+            back: "Retour à la liste des catégories"
     not_blank:
         name: "Le nom ne peut pas être vide."
         email: "L'adresse e-mail ne peut pas être vide."
@@ -63,6 +70,7 @@ message:
             line: "La ligne d'adresse ne peut pas être vide."
             zip_code: "Le code postal ne peut pas être vide."
             city: "La ville ne peut pas être vide."
+        label: "Le libellé ne peut pas être vide."
     length:
         min:
             phone: "Le numéro de téléphone doit comporter au moins %limit% caractères."
@@ -94,3 +102,5 @@ filter:
             address: "Adresse"
             category: "Catégorie"
             file: "Fichier"
+            user: "Utilisateur"
+            label: "Libellé"

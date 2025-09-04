@@ -47,6 +47,8 @@ admin:
         list:
             title: "Documents"
             name: "Documents"
+            add: "Ajouter un document"
+            view: "Voir les catégories"
             table:
                 id: "ID"
                 name: "NOM"
@@ -55,3 +57,15 @@ admin:
                 file: "FICHIER"
                 date: "DATE"
                 action: "ACTION"
+    document_category:
+        list:
+            title: "Catégories de documents"
+            name: "Catégories de documents"
+            add: "Ajouter une catégorie"
+            table:
+                id: "ID"
+                label: "LIBELLÉ"
+                action: "ACTION"
+        new:
+            title: "Nouvelle catégorie de document"
+            name: "Nouvelle catégorie de document"
