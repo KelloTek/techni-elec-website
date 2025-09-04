@@ -1,20 +1,70 @@
-{% extends 'base.html.twig' %}
+{% extends 'profile-base.html.twig' %}
 
-{% block title %}Hello DocumentController!{% endblock %}
+{% block title %}
+    Admin - {{ 'admin.document.list.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.document.list.name'|trans() }}
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    {% set keys = [
+        'admin.document.list.table.id'|trans(),
+        'admin.document.list.table.name'|trans(),
+        'admin.document.list.table.user'|trans(),
+        'admin.document.list.table.category'|trans(),
+        'admin.document.list.table.file'|trans(),
+        'admin.document.list.table.date'|trans(),
+        'admin.document.list.table.action'|trans()
+    ] %}
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% set data = ['id', 'name'] %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/var/www/src/Controller/Admin/DocumentController.php</code></li>
-        <li>Your template at <code>/var/www/templates/admin/document/index.html.twig</code></li>
-    </ul>
-</div>
+    {% embed 'components/table.html.twig' with {
+        root: root,
+        keys: keys,
+        values: documents,
+        page: page,
+        total: documentCount,
+        gridSize: 'grid-cols-7',
+    } %}
+        {% block values %}
+            {% for d in data %}
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ attribute(value, d) }}
+                    </p>
+                </div>
+            {% endfor %}
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.user.name }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.category.label }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.file.name }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.createdAt|date('d M Y') }}
+                </p>
+            </div>
+            <div class="flex items-center gap-1">
+                <a href="{{ path('app_admin_document', { 'user': value.user.id, 'document': value.file.name }) }}" target="_blank">
+                    <i class="bx-eye bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
+                </a>
+                <a href="{{ path('app_admin_user', { id: value.user.id }) }}">
+                    <i class="bxs-user bg-custom-dark-200 rounded-xl p-3 hover:bg-custom-dark-400 transition"></i>
+                </a>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

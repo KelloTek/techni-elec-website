@@ -11,6 +11,7 @@ navigation:
     admin:
         dashboard: "Tableau de bord"
         users: "Utilisateurs"
+        documents: "Documents"
 
 admin:
     user:
@@ -42,3 +43,15 @@ admin:
                     file: "FICHIER"
                     date: "DATE"
                     action: "ACTION"
+    document:
+        list:
+            title: "Documents"
+            name: "Documents"
+            table:
+                id: "ID"
+                name: "NOM"
+                user: "UTILISATEUR"
+                category: "CATÉGORIE"
+                file: "FICHIER"
+                date: "DATE"
+                action: "ACTION"

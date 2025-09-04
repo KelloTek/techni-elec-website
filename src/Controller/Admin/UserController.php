@@ -62,7 +62,7 @@ final class UserController extends AbstractController
 
         $user = $this->userRepository->find($id);
 
-        $documents = $this->documentRepository->search($user->getId(), $type, $search, $date, 10, $offset);
+        $documents = $this->documentRepository->searchByOneUser($user->getId(), $type, $search, $date, 10, $offset);
 
         return $this->render('admin/user/show.html.twig', [
             'root' => 'app_admin_user',
