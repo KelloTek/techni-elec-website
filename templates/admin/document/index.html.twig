@@ -31,16 +31,16 @@
     } %}
         {% block buttons %}
             {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-eye',
+                text: 'admin.document.list.button.categories'|trans(),
                 root: 'app_admin_document_categories',
                 rootParams: null,
-                icon: 'bxs-eye',
-                text: 'admin.document.list.view'|trans(),
             } %}
             {% include 'components/dashboard/button-table.html.twig' with {
-                root: 'app_admin_document_categories',
-                rootParams: null,
                 icon: 'bxs-file-plus',
-                text: 'admin.document.list.add'|trans(),
+                text: 'admin.document.list.button.add'|trans(),
+                root: 'app_admin_document_category_new',
+                rootParams: null,
             } %}
         {% endblock %}
 
@@ -74,25 +74,28 @@
             </div>
             <div class="flex items-center gap-1">
                 {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-eye',
+                    tooltip: 'admin.document.list.action.view'|trans(),
+                    isDanger: false,
                     root: 'app_admin_document',
                     rootParams: { 'user': value.user.id, 'document': value.file.name },
-                    icon: 'bxs-eye',
                     isBlank: true,
-                    isDanger: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-user',
+                    tooltip: 'admin.document.list.action.user'|trans(),
+                    isDanger: false,
                     root: 'app_admin_user',
                     rootParams: { 'id': value.user.id },
-                    icon: 'bxs-user',
                     isBlank: false,
-                    isDanger: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
-                    root: 'app_admin_document',
-                    rootParams: { 'user': value.user.id, 'document': value.file.name },
                     icon: 'bxs-trash',
-                    isBlank: false,
+                    tooltip: 'admin.document.list.action.delete'|trans(),
                     isDanger: true,
+                    root: 'app_admin_document_delete',
+                    rootParams: { document: value.id },
+                    isBlank: false,
                 } %}
             </div>
         {% endblock %}

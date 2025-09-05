@@ -38,8 +38,7 @@
             </button>
         </div>
     </form>
-    <div class="flex flex-row gap-5">
-        {% block buttons %}{% endblock %}
+    <div class="flex flex-row gap-5"> {% block buttons %}{% endblock %}
     </div>
 </div>
 
@@ -65,7 +64,7 @@
 
 <div class="mt-5 mb-12 flex w-full flex-row justify-between">
     {% set firstPage = 1 %}
-    {% set totalPage = (total / 10 + 1)|round(0, 'floor') %}
+    {% set totalPage = (total / 10)|round(0, 'ceil') %}
 
     {# Counter #}
 

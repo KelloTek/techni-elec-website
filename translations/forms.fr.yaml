@@ -23,7 +23,10 @@ placeholder:
         zip_code: "63000"
         city: "Clermont-Ferrand"
     honeypot: "France"
-    label: "Electronique, Papier..."
+    label: "Electronique, Facture..."
+    confirm_delete:
+        label: "Pour confirmer, veuillez retaper le libellé"
+        name: "Pour confirmer, veuillez retaper le nom"
 
 message:
     form:
@@ -56,11 +59,26 @@ message:
             title: "Réinitialisation du mot de passe"
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
+        delete_document:
+            title: "Supprimer un document"
+            description: "Êtes-vous sûr de vouloir supprimer ce document ?"
+            submit: "Oui, supprimer"
+            back: "Non, revenir en arrière"
         new_document_category:
             title: "Ajouter une catégorie de document"
             description: "Veuillez saisir les informations de la catégorie"
             submit: "Ajouter la catégorie"
             back: "Retour à la liste des catégories"
+        edit_document_category:
+            title: "Modifier une catégorie de document"
+            description: "Veuillez saisir les informations de la catégorie"
+            submit: "Mettre à jour la catégorie"
+            back: "Retour à la liste des catégories"
+        delete_document_category:
+            title: "Supprimer une catégorie de document"
+            description: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
+            submit: "Oui, supprimer"
+            back: "Non, revenir en arrière"
     not_blank:
         name: "Le nom ne peut pas être vide."
         email: "L'adresse e-mail ne peut pas être vide."
@@ -71,6 +89,7 @@ message:
             zip_code: "Le code postal ne peut pas être vide."
             city: "La ville ne peut pas être vide."
         label: "Le libellé ne peut pas être vide."
+        confirm_delete: "Vous devez confirmer la suppression."
     length:
         min:
             phone: "Le numéro de téléphone doit comporter au moins %limit% caractères."

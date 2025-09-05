@@ -9,6 +9,12 @@
 {% endblock %}
 
 {% block body %}
+    {% for flash in app.flashes('success') %}
+        <div class="bg-custom-green-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
+            {{ flash }}
+        </div>
+    {% endfor %}
+
     {% set keys = [
         'admin.document_category.list.table.id'|trans(),
         'admin.document_category.list.table.label'|trans(),
@@ -27,10 +33,16 @@
     } %}
         {% block buttons %}
             {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-eye',
+                text: 'admin.document_category.list.button.documents'|trans(),
+                root: 'app_admin_documents',
+                rootParams: null,
+            } %}
+            {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-plus-circle',
+                text: 'admin.document_category.list.button.add'|trans(),
                 root: 'app_admin_document_category_new',
                 rootParams: null,
-                icon: 'bxs-plus-circle',
-                text: 'admin.document_category.list.add'|trans(),
             } %}
         {% endblock %}
 
@@ -44,16 +56,18 @@
             {% endfor %}
             <div class="flex items-center gap-1">
                 {% include 'components/dashboard/action-button-table.html.twig' with {
-                    root: 'app_admin_documents',
-                    rootParams: null,
                     icon: 'bxs-edit',
-                    isBlank: true,
+                    tooltip: 'admin.document_category.list.action.edit'|trans(),
+                    root: 'app_admin_document_category_edit',
+                    rootParams: { category: value.id },
+                    isBlank: false,
                     isDanger: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
-                    root: 'app_admin_documents',
-                    rootParams: null,
                     icon: 'bxs-trash',
+                    tooltip: 'admin.document_category.list.action.delete'|trans(),
+                    root: 'app_admin_document_category_delete',
+                    rootParams: { category: value.id },
                     isBlank: false,
                     isDanger: true,
                 } %}

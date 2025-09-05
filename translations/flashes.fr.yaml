@@ -1,0 +1,7 @@
+document_category:
+    new:
+        success: "La catégorie de document %label% a été créée avec succès."
+    edit:
+        success: "La catégorie de document %label% a été mise à jour avec succès."
+    delete:
+        success: "La catégorie de document %label% a été supprimée avec succès."

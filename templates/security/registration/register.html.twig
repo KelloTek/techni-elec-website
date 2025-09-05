@@ -13,7 +13,7 @@
     } %}
         {% block beforeForm %}
             {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="bg-custom-red-100 mb-12 rounded-xl p-5 text-center font-semibold" role="alert">
+                <div class="bg-custom-red-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
                     {{ flash_error }}
                 </div>
             {% endfor %}
