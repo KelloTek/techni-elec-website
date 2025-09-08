@@ -35,6 +35,7 @@ class FileFixtures extends Fixture
             imagedestroy($image);
 
             $file = new File();
+            $file->setOriginalName($filename);
             $file->setName($filename);
             $file->setPath($filepath);
             $file->setSize(filesize($filepath));
@@ -53,6 +54,7 @@ class FileFixtures extends Fixture
             file_put_contents($filepath, $pdfContent);
 
             $file = new File();
+            $file->setOriginalName($filename);
             $file->setName($filename);
             $file->setPath($filepath);
             $file->setSize(filesize($filepath));

@@ -62,6 +62,12 @@ admin:
                 file: "FICHIER"
                 date: "DATE"
                 action: "ACTION"
+        new:
+            title: "Nouveau document"
+            name: "Nouveau document"
+        delete:
+            title: "Supprimer le document"
+            name: "Supprimer le document"
     document_category:
         list:
             title: "Catégories de documents"

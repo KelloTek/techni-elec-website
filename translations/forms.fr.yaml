@@ -12,6 +12,9 @@ label:
     agree_terms: "J'accepte les conditions générales."
     honeypot: "Pays"
     label: "Libellé"
+    category: "Catégorie"
+    user: "Utilisateur"
+    file: "Fichier"
 
 placeholder:
     name: "Jean DUPONT ou Société XYZ"
@@ -27,6 +30,7 @@ placeholder:
     confirm_delete:
         label: "Pour confirmer, veuillez retaper le libellé"
         name: "Pour confirmer, veuillez retaper le nom"
+    name_document: "Contrat de prestation"
 
 message:
     form:
@@ -59,6 +63,11 @@ message:
             title: "Réinitialisation du mot de passe"
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
+        new_document:
+            title: "Ajouter un document"
+            description: "Veuillez saisir les informations du document"
+            submit: "Ajouter le document"
+            back: "Retour à la liste des documents"
         delete_document:
             title: "Supprimer un document"
             description: "Êtes-vous sûr de vouloir supprimer ce document ?"

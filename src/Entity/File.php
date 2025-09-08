@@ -16,10 +16,13 @@ class File
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $originalName = null;
+
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 20)]
     private ?string $type = null;
 
     #[ORM\Column(type: Types::BIGINT)]
@@ -70,6 +73,18 @@ class File
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getOriginalName(): ?string
+    {
+        return $this->originalName;
+    }
+
+    public function setOriginalName(string $originalName): static
+    {
+        $this->originalName = $originalName;
+
+        return $this;
     }
 
     public function getName(): ?string

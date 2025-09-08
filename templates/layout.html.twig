@@ -1,10 +1,10 @@
 {% use "form_div_layout.html.twig" %}
 
 {% block form_row %}
-    <div class="mb-2 {{ form.vars.attr['data-sr-only'] ? 'sr-only' : '' }}">
+    <div class="mb-2 {{ attribute(form.vars.attr, 'data-sr-only') ? 'sr-only' : '' }}">
         {{ form_label(form) }}
         <div class="relative mt-2 flex items-center">
-            <i class="bx {{ form.vars.attr['data-icon'] }} bg-custom-dark-400 rounded-l-xl p-3 text-2xl"></i>
+            <i class="{{ attribute(form.vars.attr, 'data-icon') ?? '' }} bg-custom-dark-400 rounded-l-xl p-3 text-2xl"></i>
             {{ form_widget(form) }}
         </div>
         {{ form_errors(form) }}

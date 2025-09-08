@@ -7,6 +7,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Document
 {
     #[ORM\Id]
@@ -54,6 +55,7 @@ class Document
         return $this->createdAt;
     }
 
+    #[ORM\PrePersist]
     public function setCreatedAt(): void
     {
         $this->createdAt = new \DateTimeImmutable();

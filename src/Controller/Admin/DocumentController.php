@@ -4,17 +4,23 @@ namespace App\Controller\Admin;
 
 use App\Entity\Document;
 use App\Entity\DocumentCategory;
+use App\Entity\File;
+use App\Entity\User;
 use App\Form\DocumentCategoryDeleteType;
 use App\Form\DocumentCategoryType;
 use App\Form\DocumentDeleteType;
+use App\Form\DocumentType;
 use App\Repository\DocumentCategoryRepository;
 use App\Repository\DocumentRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/document')]
@@ -55,6 +61,56 @@ final class DocumentController extends AbstractController
         ]);
     }
 
+    #[Route('/new', name: 'app_admin_document_new')]
+    public function newDocument(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $document = new Document();
+        $form = $this->createForm(DocumentType::class, $document);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /**  @var UploadedFile $uploadedFile */
+            $uploadedFile = $form->get('file')->get('upload')->getData();
+
+            if ($uploadedFile) {
+                $user = $this->getUser();
+
+                $uploadDir = $this->getParameter('private_uploads_dir'). '/' . $user->getId();
+
+                if (!is_dir($uploadDir)) {
+                    mkdir($uploadDir, 0775, true);
+                }
+
+                $safeFilename = $slugger->slug(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME));
+                $newFilename = $safeFilename . '-' .uniqid() . '.' . $uploadedFile->guessExtension();
+
+                $size = $uploadedFile->getSize();
+                $uploadedFile->move($uploadDir, $newFilename);
+
+                $file = new File();
+                $file->setOriginalName($uploadedFile->getClientOriginalName());
+                $file->setName($newFilename);
+                $file->setType($uploadedFile->getClientMimeType());
+                $file->setSize($size);
+                $file->setPath($uploadedFile->getRealPath());
+
+                $document->setFile($file);
+
+                $em->persist($file);
+                $em->persist($document);
+                $em->flush();
+
+                $this->addFlash('success', $this->translator->trans('document.new.success', ['%label%' => $document->getName()], 'flashes'));
+                return $this->redirectToRoute('app_admin_documents');
+            }
+        }
+
+        return $this->render('admin/document/new_document.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
     #[Route('/delete/{document}', name: 'app_admin_document_delete')]
     public function deleteDocument(Document $document, Request $request, EntityManagerInterface $em): Response
     {
@@ -76,15 +132,22 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/view/{user}/{document}', name: 'app_admin_document')]
-    public function viewOneByUser(int $user, string $document): Response
+    public function viewOneByUser(int $user, int $document, UserRepository $userRepository, DocumentRepository $documentRepository): Response
     {
-        $filePath = $this->getParameter('kernel.project_dir') . "/private/uploads/$user/$document";
+        $user = $userRepository->findOneBy(['id' => $user]);
+        $document = $documentRepository->findOneBy(['id' => $document]);
+
+        if ($this->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('You do not have permission to access this file.');
+        }
+
+        $filePath = $this->getParameter('private_uploads_dir') . '/' . $user->getId() . '/' . $document->getFile()->getName();
 
         if (!file_exists($filePath)) {
             throw $this->createNotFoundException('The file does not exist');
         }
 
-        return $this->file($filePath, $document, ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->file($filePath, $document->getName(), ResponseHeaderBag::DISPOSITION_INLINE);
     }
 
     #[Route('/categories/{page}', name: 'app_admin_document_categories')]

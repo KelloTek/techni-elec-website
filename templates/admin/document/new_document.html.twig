@@ -1,0 +1,36 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.document.new.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.document.new.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/form.html.twig' with {
+        title: 'message.form.new_document.title'|trans({}, 'forms'),
+        description: 'message.form.new_document.description'|trans({}, 'forms'),
+        submit: 'message.form.new_document.submit'|trans({}, 'forms'),
+        form: form
+    } %}
+        {% block form %}
+            {{ form_row(form.name) }}
+
+            {{ form_row(form.file.upload) }}
+
+            {{ form_row(form.category) }}
+
+            {{ form_row(form.user) }}
+        {% endblock %}
+
+        {% block afterForm %}
+            <p class="text-center">
+                <a href="{{ path('app_admin_documents') }}" class="hover:text-custom-orange-100">
+                    {{ 'message.form.new_document.back'|trans({}, 'forms') }}
+                </a>
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

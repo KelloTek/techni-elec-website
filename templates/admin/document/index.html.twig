@@ -9,6 +9,12 @@
 {% endblock %}
 
 {% block body %}
+    {% for flash in app.flashes('success') %}
+        <div class="bg-custom-green-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
+            {{ flash }}
+        </div>
+    {% endfor %}
+
     {% set keys = [
         'admin.document.list.table.id'|trans(),
         'admin.document.list.table.name'|trans(),
@@ -39,7 +45,7 @@
             {% include 'components/dashboard/button-table.html.twig' with {
                 icon: 'bxs-file-plus',
                 text: 'admin.document.list.button.add'|trans(),
-                root: 'app_admin_document_category_new',
+                root: 'app_admin_document_new',
                 rootParams: null,
             } %}
         {% endblock %}
@@ -78,7 +84,7 @@
                     tooltip: 'admin.document.list.action.view'|trans(),
                     isDanger: false,
                     root: 'app_admin_document',
-                    rootParams: { 'user': value.user.id, 'document': value.file.name },
+                    rootParams: { 'user': value.user.id, 'document': value.id },
                     isBlank: true,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {

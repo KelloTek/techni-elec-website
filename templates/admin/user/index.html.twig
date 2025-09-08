@@ -55,6 +55,7 @@
                     icon: 'bxs-eye',
                     isBlank: false,
                     isDanger: false,
+                    tooltip: 'admin.user.list.tooltip.view'|trans()
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
                     root: 'app_admin_user',
@@ -62,6 +63,7 @@
                     icon: 'bxs-trash',
                     isBlank: false,
                     isDanger: true,
+                    tooltip: 'admin.user.list.tooltip.view'|trans()
                 } %}
             </div>
         {% endblock %}

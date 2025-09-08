@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250822095544 extends AbstractMigration
+final class Version20250908114854 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -36,7 +36,7 @@ final class Version20250822095544 extends AbstractMigration
         $this->addSql('CREATE TABLE document_category (id SERIAL NOT NULL, label VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE expertise (id SERIAL NOT NULL, image_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_229ADF8B3DA5256D ON expertise (image_id)');
-        $this->addSql('CREATE TABLE file (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, type VARCHAR(255) NOT NULL, size BIGINT NOT NULL, path TEXT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE file (id SERIAL NOT NULL, original_name TEXT NOT NULL, name TEXT NOT NULL, type VARCHAR(20) NOT NULL, size BIGINT NOT NULL, path TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE file_request (file_id INT NOT NULL, request_id INT NOT NULL, PRIMARY KEY(file_id, request_id))');
         $this->addSql('CREATE INDEX IDX_60F136A493CB796C ON file_request (file_id)');
         $this->addSql('CREATE INDEX IDX_60F136A4427EB8A5 ON file_request (request_id)');
