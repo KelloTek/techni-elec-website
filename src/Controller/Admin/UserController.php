@@ -86,10 +86,6 @@ final class UserController extends AbstractController
     #[Route('/delete/{user}', name: 'app_admin_user_delete')]
     public function delete(Request $request, User $user, EntityManagerInterface $em): Response
     {
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('You do not have permission to delete this user.');
-        }
-
         $form = $this->createForm(DeleteType::class, $user);
 
         $form->handleRequest($request);

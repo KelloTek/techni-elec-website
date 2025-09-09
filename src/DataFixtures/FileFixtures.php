@@ -39,7 +39,7 @@ class FileFixtures extends Fixture
             $file->setName($filename);
             $file->setPath($filepath);
             $file->setSize(filesize($filepath));
-            $file->setType('jpg');
+            $file->setType('image/jpg');
 
             $this->addReference(self::IMAGE_REFERENCE. $i, $file);
 
@@ -58,7 +58,7 @@ class FileFixtures extends Fixture
             $file->setName($filename);
             $file->setPath($filepath);
             $file->setSize(filesize($filepath));
-            $file->setType('pdf');
+            $file->setType('application/pdf');
 
             $this->addReference(self::PDF_REFERENCE . $i, $file);
 

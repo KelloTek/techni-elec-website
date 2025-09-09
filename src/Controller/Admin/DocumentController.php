@@ -4,13 +4,13 @@ namespace App\Controller\Admin;
 
 use App\Entity\Document;
 use App\Entity\DocumentCategory;
-use App\Entity\File;
 use App\Form\DeleteType;
 use App\Form\DocumentCategoryType;
 use App\Form\DocumentType;
 use App\Repository\DocumentCategoryRepository;
 use App\Repository\DocumentRepository;
 use App\Repository\UserRepository;
+use App\Service\FileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -27,6 +27,8 @@ final class DocumentController extends AbstractController
     public function __construct(
         private DocumentRepository $documentRepository,
         private DocumentCategoryRepository $documentCategoryRepository,
+        private EntityManagerInterface $entityManager,
+        private FileService $fileService,
         private TranslatorInterface $translator
     ) {}
 
@@ -60,7 +62,7 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_document_new')]
-    public function newDocument(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    public function newDocument(Request $request): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
@@ -72,32 +74,14 @@ final class DocumentController extends AbstractController
             $uploadedFile = $form->get('file')->get('upload')->getData();
 
             if ($uploadedFile) {
-                $uploadDir = $this->getParameter('private_uploads_dir'). '/' . $document->getUser()->getId();
-
-                if (!is_dir($uploadDir)) {
-                    mkdir($uploadDir, 0775, true);
-                }
-
-                $safeFilename = $slugger->slug(pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME));
-                $newFilename = $safeFilename . '-' .uniqid() . '.' . $uploadedFile->guessExtension();
-
-                $size = $uploadedFile->getSize();
-                $uploadedFile->move($uploadDir, $newFilename);
-
-                $file = new File();
-                $file->setOriginalName($uploadedFile->getClientOriginalName());
-                $file->setName($newFilename);
-                $file->setType($uploadedFile->getClientMimeType());
-                $file->setSize($size);
-                $file->setPath($uploadDir . '/' . $newFilename);
+                $file = $this->fileService->uploadFile($uploadedFile, $document->getUser()->getId());
 
                 $document->setFile($file);
 
-                $em->persist($file);
-                $em->persist($document);
-                $em->flush();
+                $this->entityManager->persist($document);
+                $this->entityManager->flush();
 
-                $this->addFlash('success', $this->translator->trans('document.new.success', ['%label%' => $document->getName()], 'flashes'));
+                $this->addFlash('success', $this->translator->trans('document.new.success', ['%name%' => $document->getName()], 'flashes'));
                 return $this->redirectToRoute('app_admin_documents');
             }
         }
@@ -108,17 +92,17 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/delete/{document}', name: 'app_admin_document_delete')]
-    public function deleteDocument(Document $document, Request $request, EntityManagerInterface $em): Response
+    public function deleteDocument(Document $document, Request $request): Response
     {
         $form = $this->createForm(DeleteType::class, $document);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() === $document->getName()) {
-            $em->remove($document);
-            $em->flush();
+            $this->entityManager->remove($document);
+            $this->entityManager->flush();
 
-            $this->addFlash('success', $this->translator->trans('document.delete.success', ['%label%' => $document->getName()], 'flashes'));
+            $this->addFlash('success', $this->translator->trans('document.delete.success', ['%name%' => $document->getName()], 'flashes'));
             return $this->redirectToRoute('app_admin_documents');
         }
 
@@ -128,18 +112,12 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/view/{user}/{document}', name: 'app_admin_document')]
-    public function viewOneByUser(int $user, int $document, UserRepository $userRepository, DocumentRepository $documentRepository): Response
+    public function viewOneByUser(int $user, int $document, UserRepository $userRepository): Response
     {
         $user = $userRepository->findOneBy(['id' => $user]);
-        $document = $documentRepository->findOneBy(['id' => $document]);
+        $document = $this->documentRepository->findOneBy(['id' => $document]);
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('You do not have permission to access this file.');
-        }
-
-        $filePath = $this->getParameter('private_uploads_dir') . '/' . $user->getId() . '/' . $document->getFile()->getName();
-
-        return $this->file($filePath, $document->getName(), ResponseHeaderBag::DISPOSITION_INLINE);
+        return $this->fileService->viewFile($user->getId(), $document->getFile()->getName());
     }
 
     #[Route('/categories/{page}', name: 'app_admin_document_categories')]
@@ -169,7 +147,7 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/category/new', name: 'app_admin_document_category_new')]
-    public function newCategory(Request $request, EntityManagerInterface $em): Response
+    public function newCategory(Request $request): Response
     {
         $category = new DocumentCategory();
 
@@ -178,10 +156,10 @@ final class DocumentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($category);
-            $em->flush();
+            $this->entityManager->persist($category);
+            $this->entityManager->flush();
 
-            $this->addFlash('success', $this->translator->trans('document_category.new.success', ['%label%' => $category->getLabel()], 'flashes'));
+            $this->addFlash('success', $this->translator->trans('document_category.new.success', ['%name%' => $category->getLabel()], 'flashes'));
             return $this->redirectToRoute('app_admin_document_categories');
         }
 
@@ -191,17 +169,17 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/category/edit/{category}', name: 'app_admin_document_category_edit')]
-    public function editCategory(DocumentCategory $category, Request $request, EntityManagerInterface $em): Response
+    public function editCategory(DocumentCategory $category, Request $request): Response
     {
         $form = $this->createForm(DocumentCategoryType::class, $category);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->persist($category);
-            $em->flush();
+            $this->entityManager->persist($category);
+            $this->entityManager->flush();
 
-            $this->addFlash('success', $this->translator->trans('document_category.edit.success', ['%label%' => $category->getLabel()], 'flashes'));
+            $this->addFlash('success', $this->translator->trans('document_category.edit.success', ['%name%' => $category->getLabel()], 'flashes'));
             return $this->redirectToRoute('app_admin_document_categories');
         }
 
@@ -211,17 +189,17 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/category/delete/{category}', name: 'app_admin_document_category_delete')]
-    public function deleteCategory(DocumentCategory $category, Request $request, EntityManagerInterface $em): Response
+    public function deleteCategory(DocumentCategory $category, Request $request): Response
     {
         $form = $this->createForm(DeleteType::class, $category);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid() && $form->get('label')->getData() === $category->getLabel()) {
-            $em->remove($category);
-            $em->flush();
+            $this->entityManager->remove($category);
+            $this->entityManager->flush();
 
-            $this->addFlash('success', $this->translator->trans('document_category.delete.success', ['%label%' => $category->getLabel()], 'flashes'));
+            $this->addFlash('success', $this->translator->trans('document_category.delete.success', ['%name%' => $category->getLabel()], 'flashes'));
             return $this->redirectToRoute('app_admin_document_categories');
         }
 

@@ -3,13 +3,13 @@ user:
         success: "L'utilisateur %username% a été supprimé avec succès."
 document:
     new:
-        success: "Le document %label% a été créé avec succès."
+        success: "Le document %name% a été créé avec succès."
     delete:
-        success: "Le document %label% a été supprimé avec succès."
+        success: "Le document %name% a été supprimé avec succès."
 document_category:
     new:
-        success: "La catégorie de document %label% a été créée avec succès."
+        success: "La catégorie de document %name% a été créée avec succès."
     edit:
-        success: "La catégorie de document %label% a été mise à jour avec succès."
+        success: "La catégorie de document %name% a été mise à jour avec succès."
     delete:
-        success: "La catégorie de document %label% a été supprimée avec succès."
+        success: "La catégorie de document %name% a été supprimée avec succès."

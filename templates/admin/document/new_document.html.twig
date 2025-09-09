@@ -10,9 +10,9 @@
 
 {% block body %}
     {% embed 'components/dashboard/form.html.twig' with {
-        title: 'message.form.new_document.title'|trans({}, 'forms'),
-        description: 'message.form.new_document.description'|trans({}, 'forms'),
-        submit: 'message.form.new_document.submit'|trans({}, 'forms'),
+        title: 'admin.form.new_document.title'|trans({}, 'forms'),
+        description: 'admin.form.new_document.description'|trans({}, 'forms'),
+        submit: 'admin.form.new_document.submit'|trans({}, 'forms'),
         form: form
     } %}
         {% block form %}
@@ -28,7 +28,7 @@
         {% block afterForm %}
             <p class="text-center">
                 <a href="{{ path('app_admin_documents') }}" class="hover:text-custom-orange-100">
-                    {{ 'message.form.new_document.back'|trans({}, 'forms') }}
+                    {{ 'admin.form.new_document.back'|trans({}, 'forms') }}
                 </a>
             </p>
         {% endblock %}
