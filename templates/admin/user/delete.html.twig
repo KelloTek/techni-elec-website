@@ -1,0 +1,30 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.user.delete.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.user.delete.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/form.html.twig' with {
+        title: 'message.form.delete_user.admin.title'|trans({}, 'forms'),
+        description: 'message.form.delete_user.admin.description'|trans({}, 'forms'),
+        submit: 'message.form.delete_user.admin.submit'|trans({}, 'forms'),
+        form: form
+    } %}
+        {% block form %}
+            {{ form_row(form.name) }}
+        {% endblock %}
+
+        {% block afterForm %}
+            <p class="text-center">
+                <a href="{{ path('app_admin_users') }}" class="hover:text-custom-orange-100">
+                    {{ 'message.form.delete_user.back'|trans({}, 'forms') }}
+                </a>
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

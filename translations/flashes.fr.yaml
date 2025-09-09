@@ -1,3 +1,6 @@
+user:
+    delete:
+        success: "L'utilisateur %username% a été supprimé avec succès."
 document:
     new:
         success: "Le document %label% a été créé avec succès."

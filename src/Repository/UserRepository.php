@@ -83,6 +83,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
 
         $qb->orderBy('q.id', 'ASC')
+            ->andWhere('q.isDeleted = false')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()
@@ -94,6 +95,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             'results' => iterator_to_array($paginator),
             'count' => count($paginator),
         ];
+    }
+
+    public function delete(User $user): void
+    {
+        $userUniqId = uniqid();
+
+        $user->setName('deleted_user_' . $userUniqId);
+        $user->setEmail('deleted_user_' . $userUniqId . '@deleted.local');
+        $user->setPhone(null);
+        $user->setPassword('');
+
+        $user->getAddress()->setLine('deleted_address_' . $userUniqId);
+        $user->getAddress()->setZipCode(null);
+        $user->getAddress()->setCity(null);
+
+        $user->setIsDeleted(true);
+
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 
     //    /**

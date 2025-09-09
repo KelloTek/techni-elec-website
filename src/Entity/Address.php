@@ -17,10 +17,10 @@ class Address
     #[ORM\Column(type: Types::TEXT)]
     private ?string $line = null;
 
-    #[ORM\Column(type: Types::TEXT, length: 10)]
+    #[ORM\Column(type: Types::TEXT, length: 10, nullable: true)]
     private ?string $zipCode = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $city = null;
 
     public function getId(): ?int
@@ -45,7 +45,7 @@ class Address
         return $this->zipCode;
     }
 
-    public function setZipCode(string $zipCode): static
+    public function setZipCode(?string $zipCode): static
     {
         $this->zipCode = $zipCode;
 
@@ -57,7 +57,7 @@ class Address
         return $this->city;
     }
 
-    public function setCity(string $city): static
+    public function setCity(?string $city): static
     {
         $this->city = $city;
 

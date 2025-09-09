@@ -38,7 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     private ?string $email = null;
 
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone = null;
 
     /**
@@ -79,6 +79,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column]
     private bool $isVerified = false;
+
+    #[ORM\Column]
+    private ?bool $isDeleted = null;
 
 
     public function __construct()
@@ -147,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->phone;
     }
 
-    public function setPhone(string $phone): static
+    public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
 
@@ -339,6 +342,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->isDeleted;
+    }
+
+    public function setIsDeleted(bool $isDeleted): static
+    {
+        $this->isDeleted = $isDeleted;
 
         return $this;
     }

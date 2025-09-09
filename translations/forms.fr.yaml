@@ -63,6 +63,12 @@ message:
             title: "Réinitialisation du mot de passe"
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
+        delete_user:
+            admin:
+                title: "Supprimer l'utilisateur"
+                description: "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes ses données seront perdues."
+                submit: "Oui, supprimer l'utilisateur"
+            back: "Non, revenir en arrière"
         new_document:
             title: "Ajouter un document"
             description: "Veuillez saisir les informations du document"

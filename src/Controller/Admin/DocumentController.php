@@ -6,6 +6,7 @@ use App\Entity\Document;
 use App\Entity\DocumentCategory;
 use App\Entity\File;
 use App\Entity\User;
+use App\Form\DeleteType;
 use App\Form\DocumentCategoryDeleteType;
 use App\Form\DocumentCategoryType;
 use App\Form\DocumentDeleteType;
@@ -74,9 +75,7 @@ final class DocumentController extends AbstractController
             $uploadedFile = $form->get('file')->get('upload')->getData();
 
             if ($uploadedFile) {
-                $user = $this->getUser();
-
-                $uploadDir = $this->getParameter('private_uploads_dir'). '/' . $user->getId();
+                $uploadDir = $this->getParameter('private_uploads_dir'). '/' . $document->getUser()->getId();
 
                 if (!is_dir($uploadDir)) {
                     mkdir($uploadDir, 0775, true);
@@ -93,7 +92,7 @@ final class DocumentController extends AbstractController
                 $file->setName($newFilename);
                 $file->setType($uploadedFile->getClientMimeType());
                 $file->setSize($size);
-                $file->setPath($uploadedFile->getRealPath());
+                $file->setPath($uploadDir . '/' . $newFilename);
 
                 $document->setFile($file);
 
@@ -114,7 +113,7 @@ final class DocumentController extends AbstractController
     #[Route('/delete/{document}', name: 'app_admin_document_delete')]
     public function deleteDocument(Document $document, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(DocumentDeleteType::class, $document);
+        $form = $this->createForm(DeleteType::class, $document);
 
         $form->handleRequest($request);
 
@@ -137,15 +136,11 @@ final class DocumentController extends AbstractController
         $user = $userRepository->findOneBy(['id' => $user]);
         $document = $documentRepository->findOneBy(['id' => $document]);
 
-        if ($this->getUser() !== $user && !$this->isGranted('ROLE_ADMIN')) {
+        if (!$this->isGranted('ROLE_ADMIN')) {
             throw $this->createAccessDeniedException('You do not have permission to access this file.');
         }
 
         $filePath = $this->getParameter('private_uploads_dir') . '/' . $user->getId() . '/' . $document->getFile()->getName();
-
-        if (!file_exists($filePath)) {
-            throw $this->createNotFoundException('The file does not exist');
-        }
 
         return $this->file($filePath, $document->getName(), ResponseHeaderBag::DISPOSITION_INLINE);
     }
@@ -221,7 +216,7 @@ final class DocumentController extends AbstractController
     #[Route('/category/delete/{category}', name: 'app_admin_document_category_delete')]
     public function deleteCategory(DocumentCategory $category, Request $request, EntityManagerInterface $em): Response
     {
-        $form = $this->createForm(DocumentCategoryDeleteType::class, $category);
+        $form = $this->createForm(DeleteType::class, $category);
 
         $form->handleRequest($request);
 

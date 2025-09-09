@@ -27,7 +27,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $admin->setAddress($this->getReference(AddressFixtures::ADDRESS_REFERENCE . 'admin', Address::class));
         $admin->setRoles(['ROLE_ADMIN']);
         $admin->setIsVerified(true);
-        $admin->setCreatedAt();
+        $admin->setIsDeleted(false);
 
         $password = $this->passwordHasher->hashPassword($admin, 'admin');
         $admin->setPassword($password);
@@ -44,7 +44,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user->setAddress($this->getReference(AddressFixtures::ADDRESS_REFERENCE . $i, Address::class));
             $user->setRoles(['ROLE_USER']);
             $user->setIsVerified(false);
-            $user->setCreatedAt();
+            $user->setIsDeleted(false);
 
             $password = $this->passwordHasher->hashPassword($user, 'password');
             $user->setPassword($password);

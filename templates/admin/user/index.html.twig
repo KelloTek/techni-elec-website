@@ -23,6 +23,7 @@
 
     {% embed 'components/dashboard/table.html.twig' with {
         root: root,
+        rootParams: {'page': 1},
         keys: keys,
         values: users,
         page: page,
@@ -50,20 +51,20 @@
             </div>
             <div class="flex items-center gap-1">
                 {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-eye',
+                    tooltip: 'admin.user.list.action.view'|trans(),
+                    isDanger: false,
                     root: 'app_admin_user',
                     rootParams: { 'id': value.id },
-                    icon: 'bxs-eye',
                     isBlank: false,
-                    isDanger: false,
-                    tooltip: 'admin.user.list.tooltip.view'|trans()
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
-                    root: 'app_admin_user',
-                    rootParams: { 'id': value.id },
                     icon: 'bxs-trash',
-                    isBlank: false,
+                    tooltip: 'admin.user.list.action.delete'|trans(),
                     isDanger: true,
-                    tooltip: 'admin.user.list.tooltip.view'|trans()
+                    root: 'app_admin_user_delete',
+                    rootParams: { 'user': value.id },
+                    isBlank: false,
                 } %}
             </div>
         {% endblock %}

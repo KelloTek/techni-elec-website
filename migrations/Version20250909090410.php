@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20250908114854 extends AbstractMigration
+final class Version20250909090410 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,7 +20,7 @@ final class Version20250908114854 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE address (id SERIAL NOT NULL, line TEXT NOT NULL, zip_code TEXT NOT NULL, city TEXT NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE address (id SERIAL NOT NULL, line TEXT NOT NULL, zip_code TEXT DEFAULT NULL, city TEXT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE certification (id SERIAL NOT NULL, image_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, link TEXT NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_6C3C6D753DA5256D ON certification (image_id)');
         $this->addSql('CREATE TABLE discussion (id SERIAL NOT NULL, user_id INT DEFAULT NULL, request_id INT DEFAULT NULL, content TEXT NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
@@ -60,7 +60,7 @@ final class Version20250908114854 extends AbstractMigration
         $this->addSql('COMMENT ON COLUMN reset_password_request.expires_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE to_do (id SERIAL NOT NULL, content TEXT NOT NULL, status BOOLEAN NOT NULL, before_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN to_do.before_at IS \'(DC2Type:datetime_immutable)\'');
-        $this->addSql('CREATE TABLE users (id SERIAL NOT NULL, address_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, roles JSON NOT NULL, email VARCHAR(180) NOT NULL, phone VARCHAR(20) NOT NULL, password VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_verified BOOLEAN NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE users (id SERIAL NOT NULL, address_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, roles JSON NOT NULL, email VARCHAR(180) NOT NULL, phone VARCHAR(20) DEFAULT NULL, password VARCHAR(255) NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, is_verified BOOLEAN NOT NULL, is_deleted BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_1483A5E9F5B7AF75 ON users (address_id)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_NAME ON users (name)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_IDENTIFIER_EMAIL ON users (email)');

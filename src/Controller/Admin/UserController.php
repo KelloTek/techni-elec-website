@@ -2,8 +2,11 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\User;
+use App\Form\DeleteType;
 use App\Repository\DocumentRepository;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +22,6 @@ final class UserController extends AbstractController
         private TranslatorInterface $translator
     ) {}
 
-    // Show all users with pagination
     #[Route('s/{page}', name: 'app_admin_users')]
     public function index(Request $request, int $page = 1): Response
     {
@@ -49,8 +51,7 @@ final class UserController extends AbstractController
         ]);
     }
 
-    // Show one user
-    #[Route('/{id}/{page}', name: 'app_admin_user')]
+    #[Route('/view/{id}/{page}', name: 'app_admin_user')]
     public function show(Request $request, TranslatorInterface $translator, int $id, int $page = 1): Response
     {
         $offset = (($page - 1) * 10);
@@ -79,6 +80,29 @@ final class UserController extends AbstractController
                 ['value' => 'category', 'label' => $translator->trans('filter.options.type.category', [], 'forms')],
                 ['value' => 'file', 'label' => $translator->trans('filter.options.type.file', [], 'forms')],
             ],
+        ]);
+    }
+
+    #[Route('/delete/{user}', name: 'app_admin_user_delete')]
+    public function delete(Request $request, User $user, EntityManagerInterface $em): Response
+    {
+        if (!$this->isGranted('ROLE_ADMIN')) {
+            throw $this->createAccessDeniedException('You do not have permission to delete this user.');
+        }
+
+        $form = $this->createForm(DeleteType::class, $user);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() === $user->getName()) {
+            $this->userRepository->delete($user);
+
+            $this->addFlash('success', $this->translator->trans('user.delete.success', ['%username%' => $user->getName()], 'flashes'));
+            return $this->redirectToRoute('app_admin_users');
+        }
+
+        return $this->render('admin/user/delete.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 }

@@ -18,6 +18,9 @@ admin:
         list:
             title: "Utilisateurs"
             name: "Utilisateurs"
+            action:
+                view: "Voir l'utilisateur"
+                delete: "Supprimer l'utilisateur"
             table:
                 id: "ID"
                 name: "NOM"
@@ -35,6 +38,9 @@ admin:
                 phone: "Téléphone"
                 address: "Adresse"
             document:
+                action:
+                    view: "Voir le document"
+                    delete: "Supprimer le document"
                 title: "Documents associés"
                 table:
                     id: "ID"
@@ -43,6 +49,9 @@ admin:
                     file: "FICHIER"
                     date: "DATE"
                     action: "ACTION"
+        delete:
+            title: "Supprimer l'utilisateur"
+            name: "Supprimer l'utilisateur"
     document:
         list:
             title: "Documents"

@@ -19,7 +19,7 @@
         { title: 'admin.user.show.info.address'|trans(), text: address, icon: 'bxs-home', color: 'orange-100' }
     ] %}
 
-    <div class='grid grid-cols-2 lg:grid-cols-4 gap-5 mb-24'>
+    <div class='grid grid-cols-2 2xl:grid-cols-4 gap-5 mb-24'>
         {% for info in informations %}
             {% include 'components/dashboard/card.html.twig' with {
                 title: info.title,
@@ -77,18 +77,20 @@
             </div>
             <div class="flex items-center gap-1">
                 {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-eye',
+                    tooltip: 'admin.user.show.document.action.view'|trans(),
+                    isDanger: false,
+                    isBlank: true,
                     root: 'app_admin_document',
                     rootParams: { user: value.user.id, document: value.file.name },
-                    icon: 'bxs-eye',
-                    isBlank: true,
-                    isDanger: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-trash',
+                    tooltip: 'admin.user.show.document.action.delete'|trans(),
+                    isDanger: true,
                     root: 'app_admin_document',
                     rootParams: { 'user': value.user.id, 'document': value.file.name },
-                    icon: 'bxs-trash',
                     isBlank: false,
-                    isDanger: true,
                 } %}
             </div>
         {% endblock %}

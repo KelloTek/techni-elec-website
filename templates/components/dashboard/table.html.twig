@@ -1,7 +1,7 @@
 {# Filter #}
 
 <div class="flex flex-col lg:flex-row justify-between gap-5">
-    <form class="flex border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" method="GET" data-search-form>
+    <form class="flex border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" action="{{ rootParams != null ? path(root, rootParams) : path(root) }}" method="GET" data-search-form>
         <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
             <i class="text-2xl bx-filter"></i>
         </div>
