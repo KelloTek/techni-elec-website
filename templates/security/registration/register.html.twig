@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    {{ 'message.form.register.title'|trans({}, 'forms') }}
+    {{ 'admin.form.register.title'|trans({}, 'forms') }}
 {% endblock %}
 
 {% block body %}
     {% embed 'components/form.html.twig' with {
-        title: 'message.form.register.title'|trans({}, 'forms'),
-        description: 'message.form.register.description'|trans({}, 'forms'),
-        submit: 'message.form.register.submit'|trans({}, 'forms'),
+        title: 'admin.form.register.title'|trans({}, 'forms'),
+        description: 'admin.form.register.description'|trans({}, 'forms'),
+        submit: 'admin.form.register.submit'|trans({}, 'forms'),
         form: registrationForm
     } %}
         {% block beforeForm %}
@@ -44,7 +44,7 @@
                 {{ form_widget(form.agreeTerms) }}
                 {{ form_label(form.agreeTerms) }}
                 <a href="{{ path('app_user_home') }}" class="text-custom-orange-200 hover:text-custom-orange-100 ml-1 underline">
-                    {{ 'message.form.agree_terms'|trans({}, 'forms') }}
+                    {{ 'admin.form.agree_terms'|trans({}, 'forms') }}
                 </a>
             </div>
 
@@ -55,9 +55,9 @@
 
         {% block afterForm %}
             <p class="text-center">
-                {{ 'message.form.register.already_account'|trans({}, 'forms') }}
+                {{ 'admin.form.register.already_account'|trans({}, 'forms') }}
                 <a href="{{ path('app_login') }}" class="text-custom-orange-200 hover:text-custom-orange-100 underline">
-                    {{ 'message.form.register.login'|trans({}, 'forms') }}
+                    {{ 'admin.form.register.login'|trans({}, 'forms') }}
                 </a>
             </p>
         {% endblock %}

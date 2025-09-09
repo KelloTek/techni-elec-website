@@ -1,4 +1,4 @@
-role:
+roles:
     admin: "Administrateur"
     user: "Utilisateur"
 
@@ -6,12 +6,12 @@ pagination:
     showing: "Affichage de %min% à %max% sur %total%"
 
 navigation:
-    profile:
-        logout: "Déconnexion"
     admin:
         dashboard: "Tableau de bord"
         users: "Utilisateurs"
         documents: "Documents"
+    utils:
+        logout: "Déconnexion"
 
 admin:
     user:
@@ -38,10 +38,10 @@ admin:
                 phone: "Téléphone"
                 address: "Adresse"
             document:
+                title: "Documents associés"
                 action:
                     view: "Voir le document"
                     delete: "Supprimer le document"
-                title: "Documents associés"
                 table:
                     id: "ID"
                     name: "NOM"

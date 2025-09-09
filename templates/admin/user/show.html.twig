@@ -46,6 +46,7 @@
 
     {% embed 'components/dashboard/table.html.twig' with {
         root: root,
+        rootParams: { id: user.id },
         keys: keys,
         values: documents,
         page: page,
@@ -82,14 +83,14 @@
                     isDanger: false,
                     isBlank: true,
                     root: 'app_admin_document',
-                    rootParams: { user: value.user.id, document: value.file.name },
+                    rootParams: { 'user': value.user.id, 'document': value.id },
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
                     icon: 'bxs-trash',
                     tooltip: 'admin.user.show.document.action.delete'|trans(),
                     isDanger: true,
-                    root: 'app_admin_document',
-                    rootParams: { 'user': value.user.id, 'document': value.file.name },
+                    root: 'app_admin_document_delete',
+                    rootParams: { 'document': value.id },
                     isBlank: false,
                 } %}
             </div>

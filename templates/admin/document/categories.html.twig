@@ -25,6 +25,7 @@
 
     {% embed 'components/dashboard/table.html.twig' with {
         root: root,
+        rootParams: {'page': 1},
         keys: keys,
         values: documentCategories,
         page: page,

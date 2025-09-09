@@ -10,9 +10,9 @@
 
 {% block body %}
     {% embed 'components/dashboard/form.html.twig' with {
-        title: 'message.form.delete_user.admin.title'|trans({}, 'forms'),
-        description: 'message.form.delete_user.admin.description'|trans({}, 'forms'),
-        submit: 'message.form.delete_user.admin.submit'|trans({}, 'forms'),
+        title: 'admin.form.delete_user.title'|trans({}, 'forms'),
+        description: 'admin.form.delete_user.description'|trans({}, 'forms'),
+        submit: 'admin.form.delete_user.submit'|trans({}, 'forms'),
         form: form
     } %}
         {% block form %}
@@ -22,7 +22,7 @@
         {% block afterForm %}
             <p class="text-center">
                 <a href="{{ path('app_admin_users') }}" class="hover:text-custom-orange-100">
-                    {{ 'message.form.delete_user.back'|trans({}, 'forms') }}
+                    {{ 'admin.form.delete_user.back'|trans({}, 'forms') }}
                 </a>
             </p>
         {% endblock %}

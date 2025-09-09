@@ -1,14 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block title %}
-    {{ 'message.form.reset_password.title'|trans({}, 'forms') }}
+    {{ 'admin.form.reset_password.title'|trans({}, 'forms') }}
 {% endblock %}
 
 {% block body %}
     {% embed 'components/form.html.twig' with {
-        title: 'message.form.reset_password.title'|trans({}, 'forms'),
-        description: 'message.form.reset_password.description'|trans({}, 'forms'),
-        submit: 'message.form.reset_password.submit'|trans({}, 'forms'),
+        title: 'admin.form.reset_password.title'|trans({}, 'forms'),
+        description: 'admin.form.reset_password.description'|trans({}, 'forms'),
+        submit: 'admin.form.reset_password.submit'|trans({}, 'forms'),
         form: requestForm,
     } %}
 
@@ -27,7 +27,7 @@
         {% block afterForm %}
             <p class="text-center">
                 <a href="{{ path('app_login') }}" class="hover:text-custom-orange-100">
-                    {{ 'message.form.reset_password.back_to_login'|trans({}, 'forms') }}
+                    {{ 'admin.form.reset_password.back_to_login'|trans({}, 'forms') }}
                 </a>
             </p>
         {% endblock %}

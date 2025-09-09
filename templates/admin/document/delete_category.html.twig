@@ -10,19 +10,19 @@
 
 {% block body %}
     {% embed 'components/dashboard/form.html.twig' with {
-        title: 'message.form.delete_document_category.title'|trans({}, 'forms'),
-        description: 'message.form.delete_document_category.description'|trans({}, 'forms'),
-        submit: 'message.form.delete_document_category.submit'|trans({}, 'forms'),
+        title: 'admin.form.delete_document_category.title'|trans({}, 'forms'),
+        description: 'admin.form.delete_document_category.description'|trans({}, 'forms'),
+        submit: 'admin.form.delete_document_category.submit'|trans({}, 'forms'),
         form: form
     } %}
         {% block form %}
-            {{ form_row(form.label) }}
+            {{ form_row(form.name) }}
         {% endblock %}
 
         {% block afterForm %}
             <p class="text-center">
                 <a href="{{ path('app_admin_document_categories') }}" class="hover:text-custom-orange-100">
-                    {{ 'message.form.delete_document_category.back'|trans({}, 'forms') }}
+                    {{ 'admin.form.delete_document_category.back'|trans({}, 'forms') }}
                 </a>
             </p>
         {% endblock %}

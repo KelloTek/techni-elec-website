@@ -32,7 +32,29 @@ placeholder:
         name: "Pour confirmer, veuillez retaper le nom"
     name_document: "Contrat de prestation"
 
-message:
+filter:
+    label:
+        type: "Sélectionner type de filtre"
+        search: "Recherche"
+        date: "Sélectionner une date"
+    placeholder:
+        search: "Recherche"
+        date: "Date"
+    reset: "Réinitialiser les filtres"
+    options:
+        type:
+            placeholder: "Type de filtre"
+            id: "Id"
+            name: "Nom"
+            email: "Email"
+            phone: "Téléphone"
+            address: "Adresse"
+            category: "Catégorie"
+            file: "Fichier"
+            user: "Utilisateur"
+            label: "Libellé"
+
+admin:
     form:
         agree_terms: "Voir les conditions générales"
         register:
@@ -64,10 +86,9 @@ message:
             description: "Veuillez saisir votre nouveau mot de passe"
             submit: "Changer le mot de passe"
         delete_user:
-            admin:
-                title: "Supprimer l'utilisateur"
-                description: "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes ses données seront perdues."
-                submit: "Oui, supprimer l'utilisateur"
+            title: "Supprimer l'utilisateur"
+            description: "Êtes-vous sûr de vouloir supprimer cet utilisateur ? Toutes ses données seront perdues."
+            submit: "Oui, supprimer l'utilisateur"
             back: "Non, revenir en arrière"
         new_document:
             title: "Ajouter un document"
@@ -94,6 +115,8 @@ message:
             description: "Êtes-vous sûr de vouloir supprimer cette catégorie ?"
             submit: "Oui, supprimer"
             back: "Non, revenir en arrière"
+
+message:
     not_blank:
         name: "Le nom ne peut pas être vide."
         email: "L'adresse e-mail ne peut pas être vide."
@@ -115,26 +138,3 @@ message:
         agree_terms: "Vous devez accepter nos conditions générales"
     invalid_message:
         password: "Les champs du mot de passe doivent correspondre."
-
-filter:
-    label:
-        type: "Sélectionner type de filtre"
-        search: "Recherche"
-        date: "Sélectionner une date"
-    placeholder:
-        search: "Recherche"
-        date: "Date"
-    reset: "Réinitialiser les filtres"
-    options:
-        type:
-            placeholder: "Type de filtre"
-            all: "Tous"
-            id: "Id"
-            name: "Nom"
-            email: "Email"
-            phone: "Téléphone"
-            address: "Adresse"
-            category: "Catégorie"
-            file: "Fichier"
-            user: "Utilisateur"
-            label: "Libellé"
