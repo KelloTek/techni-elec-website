@@ -53,6 +53,7 @@ filter:
             file: "Fichier"
             user: "Utilisateur"
             label: "Libellé"
+            title: "Titre"
 
 admin:
     form:

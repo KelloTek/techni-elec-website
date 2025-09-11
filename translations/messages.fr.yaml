@@ -10,6 +10,7 @@ navigation:
         dashboard: "Tableau de bord"
         users: "Utilisateurs"
         documents: "Documents"
+        requests: "Demandes"
     utils:
         logout: "Déconnexion"
 
@@ -100,3 +101,20 @@ admin:
         delete:
             title: "Supprimer la catégorie de document"
             name: "Supprimer la catégorie de document"
+    request:
+        list:
+            title: "Demandes"
+            name: "Demandes"
+            button:
+                categories: "Voir les catégories"
+            action:
+                view: "Voir la demande"
+                user: "Voir l'utilisateur"
+                delete: "Supprimer la demande"
+            table:
+                id: "ID"
+                title: "TITRE"
+                user: "UTILISATEUR"
+                category: "CATÉGORIE"
+                date: "DATE"
+                action: "ACTION"

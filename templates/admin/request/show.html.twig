@@ -1,0 +1,25 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.request.list.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.request.list.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/chat/chat.html.twig' with {
+        info: request,
+        values: request.discussions,
+    } %}
+        {% block values %}
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ value.content }}
+                    </p>
+                </div>
+        {% endblock %}
+    {% endembed %}
+
+{% endblock %}

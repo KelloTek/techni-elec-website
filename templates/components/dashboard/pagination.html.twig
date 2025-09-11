@@ -1,0 +1,41 @@
+<div class="mt-5 mb-12 flex w-full flex-row justify-between">
+    {% set firstPage = 1 %}
+    {% set totalPage = (total / 10)|round(0, 'ceil') %}
+
+    {# Counter #}
+
+    {% set showMin = page * 10 - 9 %}
+    {% set showMax = page * 10 %}
+
+    <p class="text-custom-gray-100">
+        {{ 'pagination.showing'|trans({'%min%' : showMin, '%max%': showMax, '%total%': total}) }}
+    </p>
+
+    <div class="flex text-xl">
+        {# Previous Page #}
+
+        {% set previousPage = firstPage %}
+
+        {% if page != firstPage %}
+            {% set previousPage = page - 1 %}
+        {% endif %}
+
+        <a href="{{ path(root, (params|default({})|merge({ page: previousPage, type: type, search: search, date: date }))) }}">
+            <i class="bx-chevron-left bg-custom-dark-300 border-custom-dark-100 rounded-l-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
+            page == firstPage ? 'text-custom-gray-100' : '' }}"></i>
+        </a>
+
+        {# Next Page #}
+
+        {% set nextPage = page %}
+
+        {% if page != totalPage %}
+            {% set nextPage = page + 1 %}
+        {% endif %}
+
+        <a href="{{ path(root, (params|default({})|merge({page: nextPage, type: type, search: search, date: date}))) }}">
+            <i class="bx-chevron-right bg-custom-dark-300 border-custom-dark-100 rounded-r-lg border-1 px-2 py-1 hover:bg-custom-dark-400 transition {{
+            page == totalPage ? 'text-custom-gray-100' : '' }}"></i>
+        </a>
+    </div>
+</div>

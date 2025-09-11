@@ -1,0 +1,95 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.request.list.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.request.list.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% for flash in app.flashes('success') %}
+        <div class="bg-custom-green-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
+            {{ flash }}
+        </div>
+    {% endfor %}
+
+    {% set keys = [
+        'admin.request.list.table.id'|trans(),
+        'admin.request.list.table.title'|trans(),
+        'admin.request.list.table.user'|trans(),
+        'admin.request.list.table.category'|trans(),
+        'admin.request.list.table.date'|trans(),
+        'admin.request.list.table.action'|trans()
+    ] %}
+
+    {% set data = ['id', 'title'] %}
+
+    {% embed 'components/dashboard/table.html.twig' with {
+        root: root,
+        rootParams: {'page': 1},
+        keys: keys,
+        values: requests,
+        page: page,
+        total: requestCount,
+        gridSize: 'grid-cols-7', } %} {% block buttons %} {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-eye',
+                text: 'admin.request.list.button.categories'|trans(),
+                root: 'app_admin_requests',
+                rootParams: null,
+            } %}
+        {% endblock %}
+
+        {% block values %}
+            {% for d in data %}
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ attribute(value, d) }}
+                    </p>
+                </div>
+            {% endfor %}
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.user.name }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.category.label }}
+                </p>
+            </div>
+            <div class="flex items-center">
+                <p class="truncate mr-5">
+                    {{ value.updatedAt|date('d M Y') }}
+                </p>
+            </div>
+            <div class="flex items-center gap-1">
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-eye',
+                    tooltip: 'admin.request.list.action.view'|trans(),
+                    isDanger: false,
+                    root: 'app_admin_request',
+                    rootParams: { 'request': value.user.id },
+                    isBlank: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-user',
+                    tooltip: 'admin.request.list.action.user'|trans(),
+                    isDanger: false,
+                    root: 'app_admin_user',
+                    rootParams: { 'id': value.user.id },
+                    isBlank: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-trash',
+                    tooltip: 'admin.request.list.action.delete'|trans(),
+                    isDanger: true,
+                    root: 'app_admin_document_delete',
+                    rootParams: { document: value.id },
+                    isBlank: false,
+                } %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

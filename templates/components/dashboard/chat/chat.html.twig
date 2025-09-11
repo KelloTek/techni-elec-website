@@ -1,0 +1,24 @@
+<div class="flex flex-col border-custom-dark-100 bg-custom-dark-200 p-5 overflow-hidden rounded-xl border-1">
+    <div>
+        {{ info.title }}
+        {{ info.user.name }}
+        {{ info.updatedAt|date('d/m/Y H:i') }}
+    </div>
+
+    <div class="p-12">
+        {% for value in values %}
+            <div class="border-custom-dark-100 {{ app.user.id == value.user.id ? 'bg-custom-blue-100' : 'bg-custom-dark-300' }} border-t p-5 rounded-xl">
+                {% block values %}{% endblock %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <form class="flex items-center w-full gap-12">
+        <textarea id="message" name="message" rows="1" cols="50" aria-label="{{ ''|trans() }}" placeholder="{{ ''|trans() }}" class="w-[80%]"></textarea>
+
+        <button type="submit" class="my-5 cursor-pointer rounded-xl p-3 text-xl bg-custom-orange-200 hover:bg-custom-orange-100 transition">
+            {{ submit|default('Envoyer') }}
+        </button>
+    </form>
+
+</div>

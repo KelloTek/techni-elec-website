@@ -1,0 +1,15 @@
+<div class="border-custom-dark-100 mt-5 grid grid-cols-1 overflow-hidden rounded-xl border-1">
+    <div class="bg-custom-dark-200 grid {{ gridSize }} p-5 font-bold">
+        {% for key in keys %}
+            <p class="truncate mr-5">
+                {{ key }}
+            </p>
+        {% endfor %}
+    </div>
+
+    {% for value in values %}
+        <div class="border-custom-dark-100 bg-custom-dark-300 grid {{ gridSize }} border-t p-5">
+            {% block values %}{% endblock %}
+        </div>
+    {% endfor %}
+</div>
