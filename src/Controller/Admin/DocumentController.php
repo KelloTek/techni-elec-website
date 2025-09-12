@@ -60,7 +60,7 @@ final class DocumentController extends AbstractController
     }
 
     #[Route('/new', name: 'app_admin_document_new')]
-    public function newDocument(Request $request): Response
+    public function new(Request $request): Response
     {
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
@@ -84,13 +84,13 @@ final class DocumentController extends AbstractController
             }
         }
 
-        return $this->render('admin/document/new_document.html.twig', [
+        return $this->render('admin/document/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
     #[Route('/delete/{document}', name: 'app_admin_document_delete')]
-    public function deleteDocument(Document $document, Request $request): Response
+    public function delete(Document $document, Request $request): Response
     {
         $form = $this->createForm(DeleteType::class, $document);
 
@@ -104,7 +104,7 @@ final class DocumentController extends AbstractController
             return $this->redirectToRoute('app_admin_documents');
         }
 
-        return $this->render('admin/document/delete_document.html.twig', [
+        return $this->render('admin/document/delete.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -129,7 +129,7 @@ final class DocumentController extends AbstractController
 
         $documentCategories = $this->documentCategoryRepository->search($type, $search, $date, 10, $offset);
 
-        return $this->render('admin/document/categories.html.twig', [
+        return $this->render('admin/document/categories/index.html.twig', [
             'root' => 'app_admin_document_categories',
             'type' => $type,
             'search' => $search,
@@ -161,7 +161,7 @@ final class DocumentController extends AbstractController
             return $this->redirectToRoute('app_admin_document_categories');
         }
 
-        return $this->render('admin/document/new_category.html.twig', [
+        return $this->render('admin/document/categories/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -181,7 +181,7 @@ final class DocumentController extends AbstractController
             return $this->redirectToRoute('app_admin_document_categories');
         }
 
-        return $this->render('admin/document/edit_category.html.twig', [
+        return $this->render('admin/document/categories/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -193,7 +193,7 @@ final class DocumentController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $form->get('label')->getData() === $category->getLabel()) {
+        if ($form->isSubmitted() && $form->isValid() && $form->get('name')->getData() === $category->getLabel()) {
             $this->entityManager->remove($category);
             $this->entityManager->flush();
 
@@ -201,7 +201,7 @@ final class DocumentController extends AbstractController
             return $this->redirectToRoute('app_admin_document_categories');
         }
 
-        return $this->render('admin/document/delete_category.html.twig', [
+        return $this->render('admin/document/categories/delete.html.twig', [
             'form' => $form->createView(),
         ]);
     }

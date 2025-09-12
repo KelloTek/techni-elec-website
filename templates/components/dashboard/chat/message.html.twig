@@ -1,0 +1,5 @@
+<div class="flex w-full {{ app.user.id == user ? 'justify-end' : 'justify-start' }}">
+    <div class="max-w-[45%] border-custom-dark-100 {{ app.user.id == user ? 'bg-custom-orange-200' : 'bg-custom-dark-200' }} border-t p-5 rounded-xl">
+        {% block values %}{% endblock %}
+    </div>
+</div>

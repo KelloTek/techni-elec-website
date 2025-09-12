@@ -1,0 +1,30 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.request_category.edit.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.request_category.edit.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/form.html.twig' with {
+        title: 'admin.form.edit_request_category.title'|trans({}, 'forms'),
+        description: 'admin.form.edit_request_category.description'|trans({}, 'forms'),
+        submit: 'admin.form.edit_request_category.submit'|trans({}, 'forms'),
+        form: form
+    } %}
+        {% block form %}
+            {{ form_row(form.label) }}
+        {% endblock %}
+
+        {% block afterForm %}
+            <p class="text-center">
+                <a href="{{ path('app_admin_request_categories') }}" class="hover:text-custom-orange-100">
+                    {{ 'admin.form.edit_request_category.back'|trans({}, 'forms') }}
+                </a>
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

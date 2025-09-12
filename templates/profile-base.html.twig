@@ -14,14 +14,14 @@
     </head>
     <body class='flex flex-row w-screen h-screen overflow-hidden text-white bg-custom-dark-400'>
         {% set adminLinks = [
-            { text: 'navigation.admin.dashboard'|trans(), icon: 'bxs-dashboard', href: 'app_admin_home', hrefs: ['app_admin_home'] },
             { text: 'navigation.admin.users'|trans(), icon: 'bxs-user', href: 'app_admin_users', hrefs: ['app_admin_users', 'app_admin_user', 'app_admin_user_delete'] },
             { text: 'navigation.admin.documents'|trans(), icon: 'bxs-file', href: 'app_admin_documents', hrefs: ['app_admin_documents', 'app_admin_document_new', 'app_admin_document_delete', 'app_admin_document_categories', 'app_admin_document_category_new', 'app_admin_document_category_delete'] },
-            { text: 'navigation.admin.requests'|trans(), icon: 'bxs-send', href: 'app_admin_requests', hrefs: ['app_admin_requests', 'app_admin_request'] },
+            { text: 'navigation.admin.requests'|trans(), icon: 'bxs-send', href: 'app_admin_requests', hrefs: ['app_admin_requests', 'app_admin_request', 'app_admin_request_categories'] },
         ] %}
 
         {% set profileLinks = [
-            { text: 'navigation.utils.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout', hrefs: ['app_logout'] }
+            { text: 'navigation.profile.documents'|trans(), icon: 'bxs-file', href: 'app_user_documents', hrefs: ['app_user_documents', 'app_user_document'] },
+            { text: 'navigation.profile.requests'|trans(), icon: 'bxs-send', href: 'app_user_requests', hrefs: ['app_user_requests', 'app_user_request'] }
         ] %}
 
         {% set utilsLinks = [

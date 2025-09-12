@@ -11,8 +11,15 @@ navigation:
         users: "Utilisateurs"
         documents: "Documents"
         requests: "Demandes"
+    profile:
+        documents: "Mes documents"
+        requests: "Mes demandes"
     utils:
         logout: "Déconnexion"
+
+chat:
+    owner: "Crée par %name%"
+    updated_at: "Mis à jour le %date%"
 
 admin:
     user:
@@ -118,3 +125,69 @@ admin:
                 category: "CATÉGORIE"
                 date: "DATE"
                 action: "ACTION"
+        show:
+            title: "Demande (%title%)"
+            name: "Demande n°%id%"
+    request_category:
+        list:
+            title: "Catégories de demandes"
+            name: "Catégories de demandes"
+            button:
+                add: "Ajouter une catégorie"
+                requests: "Voir les demandes"
+            action:
+                edit: "Modifier la catégorie"
+                delete: "Supprimer la catégorie"
+            table:
+                id: "ID"
+                label: "LIBELLÉ"
+                action: "ACTION"
+        new:
+            title: "Nouvelle catégorie de demande"
+            name: "Nouvelle catégorie de demande"
+        edit:
+            title: "Modifier la catégorie de demande"
+            name: "Modifier la catégorie de demande"
+        delete:
+            title: "Supprimer la catégorie de demande"
+            name: "Supprimer la catégorie de demande"
+
+profile:
+    document:
+        list:
+            title: "Mes documents"
+            name: "Mes documents"
+            action:
+                view: "Voir le document"
+            table:
+                id: "ID"
+                name: "NOM"
+                category: "CATÉGORIE"
+                file: "FICHIER"
+                date: "DATE"
+                action: "ACTION"
+        show:
+            title: "Document (%name%)"
+            name: "Document - %name%"
+    request:
+        list:
+            title: "Mes demandes"
+            name: "Mes demandes"
+            button:
+                add: "Ajouter une demande"
+            action:
+                view: "Voir la demande"
+            table:
+                id: "ID"
+                title: "TITRE"
+                user: "UTILISATEUR"
+                category: "CATÉGORIE"
+                date: "DATE"
+                action: "ACTION"
+        new:
+            title: "Nouvelle demande"
+            name: "Nouvelle demande"
+        show:
+            title: "Demande (%title%)"
+            name: "Demande - %title%"
+

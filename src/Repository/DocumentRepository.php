@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Document;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -18,9 +19,14 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
-    public function search(string $type, string $search, string $date, int $limit, int $offset): array
+    public function search(string $type, string $search, string $date, int $limit, int $offset, User $user = null): array
     {
         $qb = $this->createQueryBuilder('q');
+
+        if ($user !== null) {
+            $qb->andWhere('q.user = :user')
+                ->setParameter('user', $user->getId());
+        }
 
         if (!empty($search)) {
             $escapedSearch = '%' . addcslashes($search, '%_') . '%';

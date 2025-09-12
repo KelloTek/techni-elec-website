@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Request;
+use App\Entity\User;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
@@ -18,9 +19,14 @@ class RequestRepository extends ServiceEntityRepository
         parent::__construct($registry, Request::class);
     }
 
-    public function search(string $type, string $search, string $date, int $limit, int $offset): array
+    public function search(string $type, string $search, string $date, int $limit, int $offset, User $user = null): array
     {
         $qb = $this->createQueryBuilder('q');
+
+        if ($user !== null) {
+            $qb->andWhere('q.user = :user')
+                ->setParameter('user', $user);
+        }
 
         if (!empty($search)) {
             $escapedSearch = '%' . addcslashes($search, '%_') . '%';
@@ -47,7 +53,7 @@ class RequestRepository extends ServiceEntityRepository
                 ->setParameter('endDate', (new DateTime($date))->modify('+1 day'));
         }
 
-        $qb->orderBy('q.updatedAt', 'ASC')
+        $qb->orderBy('q.updatedAt', 'DESC')
             ->setMaxResults($limit)
             ->setFirstResult($offset)
             ->getQuery()

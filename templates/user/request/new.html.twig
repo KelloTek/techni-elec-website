@@ -1,0 +1,34 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    {{ 'profile.request.new.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'profile.request.new.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/form.html.twig' with {
+        title: 'profile.form.new_request.title'|trans({}, 'forms'),
+        description: 'profile.form.new_request.description'|trans({}, 'forms'),
+        submit: 'profile.form.new_request.submit'|trans({}, 'forms'),
+        form: form
+    } %}
+        {% block form %}
+            {{ form_row(form.title) }}
+
+            {{ form_row(form.content) }}
+
+            {{ form_row(form.category) }}
+        {% endblock %}
+
+        {% block afterForm %}
+            <p class="text-center">
+                <a href="{{ path('app_user_requests') }}" class="hover:text-custom-orange-100">
+                    {{ 'profile.form.new_request.back'|trans({}, 'forms') }}
+                </a>
+            </p>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

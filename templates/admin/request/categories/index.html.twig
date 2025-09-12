@@ -1,0 +1,78 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    Admin - {{ 'admin.request_category.list.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'admin.request_category.list.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% for flash in app.flashes('success') %}
+        <div class="bg-custom-green-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
+            {{ flash }}
+        </div>
+    {% endfor %}
+
+    {% set keys = [
+        'admin.request_category.list.table.id'|trans(),
+        'admin.request_category.list.table.label'|trans(),
+        'admin.request.list.table.action'|trans()
+    ] %}
+
+    {% set data = ['id', 'label'] %}
+
+    {% embed 'components/dashboard/table.html.twig' with {
+        root: root,
+        rootParams: {'page': 1},
+        keys: keys,
+        values: categories,
+        page: page,
+        total: count,
+        gridSize: 'grid-cols-3',
+    } %}
+        {% block buttons %}
+            {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-eye',
+                text: 'admin.request_category.list.button.requests'|trans(),
+                root: 'app_admin_requests',
+                rootParams: null,
+            } %}
+            {% include 'components/dashboard/button-table.html.twig' with {
+                icon: 'bxs-plus-circle',
+                text: 'admin.request_category.list.button.add'|trans(),
+                root: 'app_admin_request_category_new',
+                rootParams: null,
+            } %}
+        {% endblock %}
+
+        {% block values %}
+            {% for d in data %}
+                <div class="flex items-center">
+                    <p class="truncate mr-5">
+                        {{ attribute(value, d) }}
+                    </p>
+                </div>
+            {% endfor %}
+            <div class="flex items-center gap-1">
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-edit',
+                    tooltip: 'admin.request_category.list.action.edit'|trans(),
+                    root: 'app_admin_request_category_edit',
+                    rootParams: { category: value.id },
+                    isBlank: false,
+                    isDanger: false,
+                } %}
+                {% include 'components/dashboard/action-button-table.html.twig' with {
+                    icon: 'bxs-trash',
+                    tooltip: 'admin.request_category.list.action.delete'|trans(),
+                    root: 'app_admin_request_category_delete',
+                    rootParams: { category: value.id },
+                    isBlank: false,
+                    isDanger: true,
+                } %}
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

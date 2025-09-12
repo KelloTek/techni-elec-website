@@ -1,11 +1,11 @@
 {% extends 'profile-base.html.twig' %}
 
 {% block title %}
-    {{ 'profile.document.list.title'|trans() }}
+    {{ 'profile.request.list.title'|trans() }}
 {% endblock %}
 
 {% block name %}
-    {{ 'profile.document.list.name'|trans() }}
+    {{ 'profile.request.list.name'|trans() }}
 {% endblock %}
 
 {% block body %}
@@ -16,25 +16,30 @@
     {% endfor %}
 
     {% set keys = [
-        'profile.document.list.table.id'|trans(),
-        'profile.document.list.table.name'|trans(),
-        'profile.document.list.table.category'|trans(),
-        'profile.document.list.table.file'|trans(),
-        'profile.document.list.table.date'|trans(),
-        'profile.document.list.table.action'|trans()
+        'profile.request.list.table.id'|trans(),
+        'profile.request.list.table.title'|trans(),
+        'profile.request.list.table.category'|trans(),
+        'profile.request.list.table.date'|trans(),
+        'profile.request.list.table.action'|trans()
     ] %}
 
-    {% set data = ['id', 'name'] %}
+    {% set data = ['id', 'title'] %}
 
     {% embed 'components/dashboard/table.html.twig' with {
         root: root,
         rootParams: {'page': 1},
         keys: keys,
-        values: documents,
+        values: requests,
         page: page,
-        total: documentCount,
-        gridSize: 'grid-cols-6',
+        total: requestCount,
+        gridSize: 'grid-cols-6', } %} {% block buttons %} {% include 'components/dashboard/button-table.html.twig' with {
+        icon: 'bxs-plus-circle',
+        text: 'profile.request.list.button.add'|trans(),
+        root: 'app_user_request_new',
+        rootParams: null,
     } %}
+    {% endblock %}
+
         {% block values %}
             {% for d in data %}
                 <div class="flex items-center">
@@ -50,22 +55,17 @@
             </div>
             <div class="flex items-center">
                 <p class="truncate mr-5">
-                    {{ value.file.name }}
-                </p>
-            </div>
-            <div class="flex items-center">
-                <p class="truncate mr-5">
-                    {{ value.createdAt|date('d M Y') }}
+                    {{ value.updatedAt|date('d M Y') }}
                 </p>
             </div>
             <div class="flex items-center gap-1">
                 {% include 'components/dashboard/action-button-table.html.twig' with {
-                    icon: 'bxs-eye',
-                    tooltip: 'profile.document.list.action.view'|trans(),
+                    icon: 'bxs-send-alt',
+                    tooltip: 'profile.request.list.action.view'|trans(),
                     isDanger: false,
-                    root: 'app_user_document',
-                    rootParams: { 'document': value.id },
-                    isBlank: true,
+                    root: 'app_user_request',
+                    rootParams: { 'requestEntity': value.id },
+                    isBlank: false,
                 } %}
             </div>
         {% endblock %}

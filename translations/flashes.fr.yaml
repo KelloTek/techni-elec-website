@@ -13,3 +13,15 @@ document_category:
         success: "La catégorie de document %name% a été mise à jour avec succès."
     delete:
         success: "La catégorie de document %name% a été supprimée avec succès."
+request:
+    new:
+        success: "La demande %id% a été créée avec succès."
+    delete:
+        success: "La demande %id% a été supprimée avec succès."
+request_category:
+    new:
+        success: "La catégorie de demande %name% a été créée avec succès."
+    edit:
+        success: "La catégorie de demande %name% a été mise à jour avec succès."
+    delete:
+        success: "La catégorie de demande %name% a été supprimée avec succès."

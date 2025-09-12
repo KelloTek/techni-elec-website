@@ -36,7 +36,7 @@
         gridSize: 'grid-cols-7', } %} {% block buttons %} {% include 'components/dashboard/button-table.html.twig' with {
                 icon: 'bxs-eye',
                 text: 'admin.request.list.button.categories'|trans(),
-                root: 'app_admin_requests',
+                root: 'app_admin_request_categories',
                 rootParams: null,
             } %}
         {% endblock %}
@@ -70,7 +70,7 @@
                     tooltip: 'admin.request.list.action.view'|trans(),
                     isDanger: false,
                     root: 'app_admin_request',
-                    rootParams: { 'request': value.user.id },
+                    rootParams: { 'requestEntity': value.user.id },
                     isBlank: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {

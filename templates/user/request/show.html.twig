@@ -1,11 +1,11 @@
 {% extends 'profile-base.html.twig' %}
 
 {% block title %}
-    Admin - {{ 'admin.request.list.title'|trans() }}
+    {{ 'profile.request.show.title'|trans({'%title%': request.title}) }}
 {% endblock %}
 
 {% block name %}
-    {{ 'admin.request.list.name'|trans() }}
+    {{ 'profile.request.show.name'|trans({'%title%': request.title}) }}
 {% endblock %}
 
 {% block body %}
@@ -15,11 +15,11 @@
         form: form,
     } %}
         {% block values %}
-                <div class="flex items-center">
-                    <p class="break-normal">
-                        {{ value.content }}
-                    </p>
-                </div>
+            <div class="flex items-center">
+                <p class="break-normal">
+                    {{ value.content }}
+                </p>
+            </div>
         {% endblock %}
 
         {% block form %}
