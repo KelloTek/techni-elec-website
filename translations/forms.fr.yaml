@@ -140,6 +140,10 @@ admin:
 
 profile:
     form:
+        settings:
+            title: "Paramètres du profil"
+            description: "Veuillez saisir vos informations"
+            submit: "Mettre à jour le profil"
         new_request:
             title: "Nouvelle demande"
             description: "Veuillez saisir les informations de la demande"

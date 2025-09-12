@@ -1,0 +1,46 @@
+{% extends 'profile-base.html.twig' %}
+
+{% block title %}
+    {{ 'profile.settings.title'|trans() }}
+{% endblock %}
+
+{% block name %}
+    {{ 'profile.settings.name'|trans() }}
+{% endblock %}
+
+{% block body %}
+    {% embed 'components/dashboard/form.html.twig' with {
+        title: 'profile.form.settings.title'|trans({}, 'forms'),
+        description: 'profile.form.settings.description'|trans({}, 'forms'),
+        submit: 'profile.form.settings.submit'|trans({}, 'forms'),
+        form: form
+    } %}
+        {% block beforeForm %}
+            {% for flash in app.flashes('success') %}
+                <div class="bg-custom-green-100 mb-12 rounded-xl p-5 text-center font-bold" role="alert">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endblock %}
+
+        {% block form %}
+            {{ form_row(form.name) }}
+
+            <div class="grid gap-4 sm:grid-cols-2">
+                {{ form_row(form.email) }}
+
+                {{ form_row(form.phone) }}
+            </div>
+
+            <div class="grid gap-4" data-form-address="data-form-address">
+                {{ form_row(form.address.line) }}
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                    {{ form_row(form.address.zipCode) }}
+
+                    {{ form_row(form.address.city) }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -1,3 +1,6 @@
+settings:
+    save:
+        success: "Les paramètres ont été enregistrés avec succès."
 user:
     delete:
         success: "L'utilisateur %username% a été supprimé avec succès."

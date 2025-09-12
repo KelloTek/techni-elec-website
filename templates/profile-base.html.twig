@@ -25,6 +25,7 @@
         ] %}
 
         {% set utilsLinks = [
+            { text: 'navigation.utils.settings'|trans(), icon: 'bxs-cog', href: 'app_user_settings', hrefs: ['app_user_settings'] },
             { text: 'navigation.utils.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout', hrefs: ['app_logout'] }
         ] %}
 
@@ -71,9 +72,6 @@
 
         <div>
             <header class='flex justify-end gap-1 w-full p-1 bg-custom-dark-300'>
-                <div class="flex items-center cursor-pointer">
-                    <i class="text-2xl font-bold bx-chevron-left" data-profile-navigation-showing-button></i>
-                </div>
                 <div class="flex items-center">
                     <i class="text-xl bxs-bell"></i>
                 </div>
