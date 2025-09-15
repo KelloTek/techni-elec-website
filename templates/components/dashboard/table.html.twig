@@ -1,20 +1,20 @@
 {# Filter #}
 
-<div class="flex flex-col lg:flex-row justify-between gap-5">
-    <form class="flex border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" action="{{ rootParams != null ? path(root, rootParams) : path(root) }}" method="GET" data-search-form>
-        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+<div class="flex flex-col xl:flex-row justify-between gap-5">
+    <form class="flex flex-col lg:flex-row border-1 border-custom-dark-100 rounded-xl bg-custom-dark-300 w-fit" action="{{ rootParams != null ? path(root, rootParams) : path(root) }}" method="GET" data-search-form>
+        <div class="flex items-center justify-center p-4 border-b-2 border-b-custom-dark-100 lg:border-b-0 lg:border-r-2 lg:border-r-custom-dark-100">
             <i class="text-2xl bx-filter"></i>
         </div>
-        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+        <div class="flex items-center justify-center p-4 border-b-2 border-b-custom-dark-100 lg:border-b-0 lg:border-r-2 lg:border-r-custom-dark-100">
             <input type="search" id="search" name="search" placeholder="{{ 'filter.placeholder.search'|trans([], 'forms') }}" value="{{ search }}" aria-label="{{ 'filter.label.search'|trans([], 'forms') }}" data-search-input
                    class="bg-custom-dark-200 accent-custom-orange-200 rounded-xl p-1 px-2">
             <label for="search" class="flex cursor-pointer">
                 <i class="text-xl bx-search-alt ml-2"></i>
             </label>
         </div>
-        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+        <div class="flex items-center justify-center p-4 border-b-2 border-b-custom-dark-100 lg:border-b-0 lg:border-r-2 lg:border-r-custom-dark-100">
             <select id="type" name="type" aria-label="{{ 'filter.label.type'|trans([], 'forms') }}" data-search-type-input
-                   class="p-1 px-2 cursor-pointer">
+                    class="p-1 px-2 cursor-pointer">
                 <option value="" {{ type == '' ? 'selected' : '' }} disabled>{{ 'filter.options.type.placeholder'|trans([], 'forms') }}</option>
                 {% for option in optionsType %}
                     <option value="{{ option.value }}" {{ type == option.value ? 'selected' : '' }}>{{ option.label }}</option>
@@ -24,28 +24,29 @@
                 <i class="text-xl bx-grid-search ml-2"></i>
             </label>
         </div>
-        <div class="flex items-center p-4 border-r-2 border-r-custom-dark-100">
+        <div class="flex items-center justify-center p-4 border-b-2 border-b-custom-dark-100 lg:border-b-0 lg:border-r-2 lg:border-r-custom-dark-100">
             <input type="text" id="date" name="date" placeholder="{{ 'filter.placeholder.date'|trans([], 'forms') }}" value="{{ date }}" aria-label="{{ 'filter.label.date'|trans([], 'forms') }}" readonly data-search-date-input
                    class="w-27 accent-custom-orange-200 rounded-xl p-1 px-2 cursor-pointer">
             <label for="date" class="flex cursor-pointer">
                 <i class="text-xl bx-calendar ml-2"></i>
             </label>
         </div>
-        <div class="flex items-center p-4 text-custom-orange-200">
+        <div class="flex items-center justify-center p-4 text-custom-orange-200">
             <button type="reset" class="flex cursor-pointer hover:text-custom-orange-100">
                 <i class="text-xl bx bx-turn-left mr-2"></i>
                 {{ 'filter.reset'|trans([], 'forms') }}
             </button>
         </div>
     </form>
-    <div class="flex flex-row gap-5"> {% block buttons %}{% endblock %}
+    <div class="flex flex-col sm:flex-row gap-5">
+        {% block buttons %}{% endblock %}
     </div>
 </div>
 
 {# Table #}
 
-<div class="border-custom-dark-100 mt-5 grid grid-cols-1 overflow-hidden rounded-xl border-1">
-    <div class="bg-custom-dark-200 grid {{ gridSize }} p-5 font-bold">
+<div class="flex flex-col mt-5 border-1 border-custom-dark-100 rounded-xl">
+    <div class="lg:grid {{ gridSize }} p-5 bg-custom-dark-200 rounded-t-xl font-bold">
         {% for key in keys %}
             <p class="truncate mr-5">
                 {{ key }}
@@ -54,7 +55,7 @@
     </div>
 
     {% for value in values %}
-        <div class="border-custom-dark-100 bg-custom-dark-300 grid {{ gridSize }} border-t p-5">
+        <div class="lg:grid {{ gridSize }} p-5 border-custom-dark-100 bg-custom-dark-300 {{ loop.first ? '' : 'border-t' }} {{ loop.last ? 'rounded-b-xl' : ''}}">
             {% block values %}{% endblock %}
         </div>
     {% endfor %}

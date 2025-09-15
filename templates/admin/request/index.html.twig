@@ -33,7 +33,10 @@
         values: requests,
         page: page,
         total: requestCount,
-        gridSize: 'grid-cols-7', } %} {% block buttons %} {% include 'components/dashboard/button-table.html.twig' with {
+        gridSize: 'grid-cols-7',
+    } %}
+        {% block buttons %}
+            {% include 'components/dashboard/button-table.html.twig' with {
                 icon: 'bxs-eye',
                 text: 'admin.request.list.button.categories'|trans(),
                 root: 'app_admin_request_categories',
