@@ -73,7 +73,7 @@
                     tooltip: 'admin.request.list.action.view'|trans(),
                     isDanger: false,
                     root: 'app_admin_request',
-                    rootParams: { 'requestEntity': value.user.id },
+                    rootParams: { 'requestEntity': value.id },
                     isBlank: false,
                 } %}
                 {% include 'components/dashboard/action-button-table.html.twig' with {
