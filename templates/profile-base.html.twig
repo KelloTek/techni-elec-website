@@ -31,13 +31,9 @@
 
         <div class="z-30 absolute hidden lg:hidden w-screen h-screen bg-black/50 opacity-0 animate-custom-overlay-collapse" data-overlay></div>
 
-        <nav class="z-40 absolute lg:static flex flex-col h-full p-5 bg-custom-dark-300 gap-2 text-center overflow-x-hidden animate-custom-nav-profile-collapse lg:animate-custom-nav-profile-expand" data-nav-profile>
-            <a href="{{ path('app_user_home') }}" class="hidden 2xl:flex items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold truncate">
+        <nav class="z-40 absolute lg:static flex flex-col h-full p-5 bg-custom-dark-300 gap-2 text-center overflow-y-scroll overflow-x-hidden scrollbar-hide animate-custom-nav-profile-collapse lg:animate-custom-nav-profile-expand" data-nav-profile>
+            <a href="{{ path('app_user_home') }}" class="flex items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold truncate">
                 <span class="text-custom-orange-200">Techni</span>-Elec
-            </a>
-
-            <a href="{{ path('app_user_home') }}" class="flex 2xl:hidden items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold truncate">
-                <span class="text-custom-orange-200">T</span>E
             </a>
 
             <hr class="text-custom-dark-100 mb-5">
@@ -100,6 +96,7 @@
             <main class="w-full h-full p-10 overflow-y-scroll">
                 <h1 class="mb-10 text-3xl font-bold">{% block name %}{% endblock %}</h1>
                 {% block body %}{% endblock %}
+                <div class="mt-20"></div>
             </main>
         </div>
     </body>

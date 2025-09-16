@@ -1,5 +1,5 @@
-<div class="flex flex-col border-custom-dark-100 bg-custom-dark-200 p-5 rounded-xl border-1">
-    <div class="flex flex-row justify-between mb-5">
+<div class="flex flex-col border-custom-dark-100 bg-custom-dark-300 p-5 rounded-xl border-1">
+    <div class="flex flex-col lg:flex-row justify-between mb-5">
         <p class="font-semibold">
             {{ 'chat.owner'|trans({'%name%': info.user.name}) }}
         </p>
@@ -8,12 +8,12 @@
         </p>
     </div>
 
-    <div class="flex flex-col gap-5 p-12 max-h-146 bg-custom-dark-300 rounded-xl overflow-scroll">
+    <div class="flex flex-col gap-5 p-5 lg:p-12 max-h-146 bg-custom-dark-200 rounded-xl overflow-scroll">
         {% embed 'components/dashboard/chat/message.html.twig' with {
             user: info.user.id
         } %}
             {% block values %}
-                {{ info.content|raw }}
+                {{ info.content }}
             {% endblock %}
         {% endembed %}
 
@@ -22,7 +22,7 @@
                 user: value.user.id
             } %}
                 {% block values %}
-                    {{ value.content|raw }}
+                    {{ value.content }}
                 {% endblock %}
             {% endembed %}
         {% endfor %}
@@ -33,13 +33,13 @@
 
     {{ form_start(form, { attr: { class: "grid gap-4"}}) }}
 
-        <div class="flex justify-center items-center gap-12 mt-5 w-full">
+        <div class="flex flex-row justify-center items-center gap-2 mt-5 w-full">
             {% block form %}
             {% endblock %}
 
-            <button type="submit" class="flex items-center my-5 cursor-pointer rounded-xl p-3 text-xl font-semibold bg-custom-orange-200 hover:bg-custom-orange-100 transition">
-                {{ submit|default('Envoyer') }}
-                <i class="bxs-send-alt ml-3"></i>
+            <button type="submit" aria-label="{{ submit|default('Envoyer') }}"
+                    class="flex items-center cursor-pointer rounded-xl p-3 text-xl font-semibold bg-custom-orange-200 hover:bg-custom-orange-100 transition">
+                <i class="bxs-send-alt"></i>
             </button>
         </div>
 

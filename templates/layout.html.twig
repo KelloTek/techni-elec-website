@@ -12,12 +12,12 @@
 {% endblock %}
 
 {% block form_widget_simple %}
-    {% set attr = attr|merge({class: ((attr.class|default('')) ~ 'bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3')|trim}) %}
+    {% set attr = attr|merge({class: ((attr.class|default('')) ~ ' bg-custom-dark-200 accent-custom-orange-200 w-full rounded-r-xl p-3')|trim}) %}
     {{ parent() }}
 {% endblock %}
 
 {% block checkbox_widget %}
-    {% set attr = attr|merge({class: ((attr.class|default('')) ~ "bg-custom-dark-200 relative mr-2 cursor-pointer appearance-none rounded-lg p-3 text-xl before:absolute before:top-0 before:left-[25%] checked:before:content-['✓']")|trim}) %}
+    {% set attr = attr|merge({class: ((attr.class|default('')) ~ " bg-custom-dark-200 relative mr-2 cursor-pointer appearance-none rounded-lg p-3 text-xl before:absolute before:top-0 before:left-[25%] checked:before:content-['✓']")|trim}) %}
     {{ parent() }}
 {% endblock %}
 
