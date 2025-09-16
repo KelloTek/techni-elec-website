@@ -15,13 +15,13 @@
     <body class='flex flex-row w-screen h-screen overflow-hidden text-white bg-custom-dark-400'>
         {% set adminLinks = [
             { text: 'navigation.admin.users'|trans(), icon: 'bxs-user', href: 'app_admin_users', hrefs: ['app_admin_users', 'app_admin_user', 'app_admin_user_delete'] },
-            { text: 'navigation.admin.documents'|trans(), icon: 'bxs-file', href: 'app_admin_documents', hrefs: ['app_admin_documents', 'app_admin_document_new', 'app_admin_document_delete', 'app_admin_document_categories', 'app_admin_document_category_new', 'app_admin_document_category_delete'] },
-            { text: 'navigation.admin.requests'|trans(), icon: 'bxs-send', href: 'app_admin_requests', hrefs: ['app_admin_requests', 'app_admin_request', 'app_admin_request_categories'] },
+            { text: 'navigation.admin.documents'|trans(), icon: 'bxs-layers-down-left', href: 'app_admin_documents', hrefs: ['app_admin_documents', 'app_admin_document_new', 'app_admin_document_delete', 'app_admin_document_categories', 'app_admin_document_category_new', 'app_admin_document_category_delete'] },
+            { text: 'navigation.admin.requests'|trans(), icon: 'bxs-message-circle-dots-2', href: 'app_admin_requests', hrefs: ['app_admin_requests', 'app_admin_request', 'app_admin_request_categories'] },
         ] %}
 
         {% set profileLinks = [
-            { text: 'navigation.profile.documents'|trans(), icon: 'bxs-file', href: 'app_user_documents', hrefs: ['app_user_documents', 'app_user_document'] },
-            { text: 'navigation.profile.requests'|trans(), icon: 'bxs-send', href: 'app_user_requests', hrefs: ['app_user_requests', 'app_user_request'] }
+            { text: 'navigation.profile.documents'|trans(), icon: 'bxs-layers-down-left', href: 'app_user_documents', hrefs: ['app_user_documents', 'app_user_document'] },
+            { text: 'navigation.profile.requests'|trans(), icon: 'bxs-message-circle-dots-2', href: 'app_user_requests', hrefs: ['app_user_requests', 'app_user_request'] }
         ] %}
 
         {% set utilsLinks = [
@@ -29,12 +29,14 @@
             { text: 'navigation.utils.logout'|trans(), icon: 'bxs-door-open', href: 'app_logout', hrefs: ['app_logout'] }
         ] %}
 
-        <nav class='flex flex-col w-custom-navigation-profile-sm lg:w-custom-navigation-profile p-5 bg-custom-dark-300 gap-2 text-center overflow-x-hidden animate-custom-navgation-profile-open' data-profile-navigation>
-            <a href='{{ path('app_user_home') }}' class='hidden 2xl:flex items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold'>
+        <div class="z-30 absolute hidden lg:hidden w-screen h-screen bg-black/50 opacity-0 animate-custom-overlay-collapse" data-overlay></div>
+
+        <nav class="z-40 absolute lg:static flex flex-col h-full p-5 bg-custom-dark-300 gap-2 text-center overflow-x-hidden animate-custom-nav-profile-collapse lg:animate-custom-nav-profile-expand" data-nav-profile>
+            <a href="{{ path('app_user_home') }}" class="hidden 2xl:flex items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold truncate">
                 <span class="text-custom-orange-200">Techni</span>-Elec
             </a>
 
-            <a href='{{ path('app_user_home') }}' class='flex 2xl:hidden items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold'>
+            <a href="{{ path('app_user_home') }}" class="flex 2xl:hidden items-center justify-center h-12 mb-5 -mt-2 text-xl font-extrabold truncate">
                 <span class="text-custom-orange-200">T</span>E
             </a>
 
@@ -70,27 +72,32 @@
             {% endfor %}
         </nav>
 
-        <div>
-            <header class='flex justify-end gap-1 w-full p-1 bg-custom-dark-300'>
+        <div class="w-full">
+            <header class="flex justify-between gap-1 w-full p-1 px-5 bg-custom-dark-300">
                 <div class="flex items-center">
-                    <i class="text-xl bxs-bell"></i>
+                    <i class="text-2xl cursor-pointer bx-sidebar hover:text-custom-orange-100 transition" data-nav-profile-minimize></i>
                 </div>
-                <a href="{{ path('app_user_settings') }}">
-                    <div class="flex items-center p-2 rounded-lg hover:bg-custom-dark-400 transition">
-                        <i class="text-4xl bxs-user-circle"></i>
-                        <div class="ml-2">
-                            <p class="font-semibold">{{ app.user.name }}</p>
-                            {% if is_granted('ROLE_ADMIN') %}
-                                <p class="text-sm">{{ 'roles.admin'|trans() }}</p>
-                            {% else %}
-                                <p class="text-sm">{{ 'roles.user'|trans() }}</p>
-                            {% endif %}
-                        </div>
+                <div class="flex gap-2">
+                    <div class="flex items-center">
+                        <i class="text-xl bxs-bell"></i>
                     </div>
-                </a>
+                    <a href="{{ path('app_user_settings') }}">
+                        <div class="flex items-center p-2 rounded-lg hover:bg-custom-dark-400 transition">
+                            <i class="text-4xl bxs-user-circle"></i>
+                            <div class="ml-2">
+                                <p class="font-semibold">{{ app.user.name }}</p>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <p class="text-sm">{{ 'roles.admin'|trans() }}</p>
+                                {% else %}
+                                    <p class="text-sm">{{ 'roles.user'|trans() }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </header>
 
-            <main class="w-custom-main-profile-sm lg:w-custom-main-profile h-full p-10 overflow-y-scroll">
+            <main class="w-full h-full p-10 overflow-y-scroll">
                 <h1 class="mb-10 text-3xl font-bold">{% block name %}{% endblock %}</h1>
                 {% block body %}{% endblock %}
             </main>

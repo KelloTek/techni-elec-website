@@ -23,40 +23,57 @@
     --color-custom-red-100: #f93c65;
     --color-custom-red-200: #ef3826;
 
-    /* Spacing */
-    --spacing-custom-navigation-profile: 10vw;
-    --spacing-custom-navigation-profile-sm: 7vw;
-    --spacing-custom-main-profile: 90vw;
-    --spacing-custom-main-profile-sm: 93vw;
-
     /* Animations */
-    --animate-custom-navigation-profile-close: navigation-profile-close 0.5s ease-in-out forwards;
-    --animate-custom-navigation-profile-open: navigation-profile-open 0.5s ease-in-out forwards;
+    --animate-custom-overlay-collapse: overlay-collapse 0.5s ease-in-out forwards;
+    --animate-custom-overlay-expand: overlay-expand 0.5s ease-in-out forwards;
+    --animate-custom-nav-profile-collapse: nav-profile-collapse 0.5s ease-in-out forwards;
+    --animate-custom-nav-profile-expand: nav-profile-expand 0.5s ease-in-out forwards;
 
-    @keyframes navigation-profile-close {
+    @keyframes overlay-collapse {
         0% {
-            width: var(--spacing-custom-navigation-profile);
+            opacity: 1;
         }
         100% {
-            width: 0;
-            padding-right: 0;
-            padding-left: 0;
-            display: none;
+            opacity: 0;
         }
     }
 
-    @keyframes navigation-profile-open {
+    @keyframes overlay-expand {
         0% {
-            width: 0;
-            padding-right: 0;
-            padding-left: 0;
-            display: none;
+            opacity: 0;
         }
         100% {
-            width: var(--spacing-custom-navigation-profile);
-            padding-right: 1rem;
-            padding-left: 1rem;
-            display: flex;
+            opacity: 1;
+        }
+    }
+
+    @keyframes nav-profile-collapse {
+        0% {
+            opacity: 1;
+            width: 14rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
+        }
+        100% {
+            opacity: 0;
+            width: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    @keyframes nav-profile-expand {
+        0% {
+            opacity: 0;
+            width: 0;
+            padding-left: 0;
+            padding-right: 0;
+        }
+        100% {
+            opacity: 1;
+            width: 14rem;
+            padding-left: 1.25rem;
+            padding-right: 1.25rem;
         }
     }
 }
