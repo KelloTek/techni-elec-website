@@ -141,7 +141,7 @@ admin:
 profile:
     form:
         settings:
-            title: "Paramètres du profil"
+            title: "Modifier le profil"
             description: "Veuillez saisir vos informations"
             submit: "Mettre à jour le profil"
         new_request:
