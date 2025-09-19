@@ -19,7 +19,7 @@
         { title: 'admin.user.show.info.address'|trans(), text: address, icon: 'bxs-home', color: 'orange-100' }
     ] %}
 
-    <div class='grid grid-cols-2 2xl:grid-cols-4 gap-5 mb-24'>
+    <div class='grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-5 mb-24'>
         {% for info in informations %}
             {% include 'components/dashboard/card.html.twig' with {
                 title: info.title,
