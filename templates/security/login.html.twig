@@ -14,7 +14,7 @@
 
             <form method="post" class="grid gap-4" name="login_form">
                 {% if error %}
-                    <div class="bg-custom-red-100 mb-3 rounded-xl p-5 text-center font-semibold">
+                    <div id="error" class="bg-custom-red-100 mb-3 rounded-xl p-5 text-center font-semibold">
                         {{ error.messageKey|trans(error.messageData, 'security') }}
                     </div>
                 {% endif %}
@@ -51,7 +51,7 @@
                 </div>
 
                 <div class="flex justify-center">
-                    <button type="submit" class="bg-custom-orange-200 hover:bg-custom-orange-100 my-5 w-[80%] cursor-pointer rounded-xl p-3 text-xl transition">
+                    <button type="submit" name="_submit" class="bg-custom-orange-200 hover:bg-custom-orange-100 my-5 w-[80%] cursor-pointer rounded-xl p-3 text-xl transition">
                         {{ 'admin.form.login.submit'|trans({}, 'forms') }}
                     </button>
                 </div>
